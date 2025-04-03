@@ -4,6 +4,7 @@ import { useState } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Menu, X } from "lucide-react"
+import { LUMA_URL } from "@/lib/constants"
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -21,26 +22,26 @@ export default function Navbar() {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
-            <Link href="/about" className="text-gray-700 hover:text-[#1f273a] transition-colors">
+            <Link href="/#about" className="text-gray-700 hover:text-[#1f273a] transition-colors">
               About
             </Link>
-            <Link href="/events" className="text-gray-700 hover:text-[#1f273a] transition-colors">
+            <Link href="/#events" className="text-gray-700 hover:text-[#1f273a] transition-colors">
               Events
             </Link>
-            <Link href="/articles" className="text-gray-700 hover:text-[#1f273a] transition-colors">
+            <Link href="/#articles" className="text-gray-700 hover:text-[#1f273a] transition-colors">
               Articles
             </Link>
-            <Link href="/startups" className="text-gray-700 hover:text-[#1f273a] transition-colors">
+            <Link href="/#startups" className="text-gray-700 hover:text-[#1f273a] transition-colors">
               Startups
             </Link>
-            <Link href="/team" className="text-gray-700 hover:text-[#1f273a] transition-colors">
+            <Link href="/#team" className="text-gray-700 hover:text-[#1f273a] transition-colors">
               Team
             </Link>
-            <Link href="/contact" className="text-gray-700 hover:text-[#1f273a] transition-colors">
+            <Link href="/#contact" className="text-gray-700 hover:text-[#1f273a] transition-colors">
               Contact
             </Link>
             <Button asChild className="bg-[#1f273a] hover:bg-[#2a3349]">
-              <Link href="/join">Join Us</Link>
+              <Link href="/#join">Join Us</Link>
             </Button>
           </nav>
 
@@ -62,42 +63,42 @@ export default function Navbar() {
         <div className="md:hidden">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 border-t border-gray-200">
             <Link
-              href="/about"
+              href="/#about"
               className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-[#1f273a] hover:bg-gray-50 rounded-md"
               onClick={() => setIsMenuOpen(false)}
             >
               About
             </Link>
             <Link
-              href="/events"
+              href="/#events"
               className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-[#1f273a] hover:bg-gray-50 rounded-md"
               onClick={() => setIsMenuOpen(false)}
             >
               Events
             </Link>
             <Link
-              href="/articles"
+              href="/#articles"
               className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-[#1f273a] hover:bg-gray-50 rounded-md"
               onClick={() => setIsMenuOpen(false)}
             >
               Articles
             </Link>
             <Link
-              href="/startups"
+              href="/#startups"
               className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-[#1f273a] hover:bg-gray-50 rounded-md"
               onClick={() => setIsMenuOpen(false)}
             >
               Startups
             </Link>
             <Link
-              href="/team"
+              href="/#team"
               className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-[#1f273a] hover:bg-gray-50 rounded-md"
               onClick={() => setIsMenuOpen(false)}
             >
               Team
             </Link>
             <Link
-              href="/contact"
+              href="/#contact"
               className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-[#1f273a] hover:bg-gray-50 rounded-md"
               onClick={() => setIsMenuOpen(false)}
             >
@@ -105,7 +106,7 @@ export default function Navbar() {
             </Link>
             <div className="px-3 py-2">
               <Button asChild className="w-full bg-[#1f273a] hover:bg-[#2a3349]">
-                <Link href="/join" onClick={() => setIsMenuOpen(false)}>
+                <Link href="/#join" onClick={() => setIsMenuOpen(false)}>
                   Join Us
                 </Link>
               </Button>
