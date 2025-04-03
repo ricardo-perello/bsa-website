@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <main className="flex flex-col min-h-screen">
       {/* Hero Section */}
-      <section className="relative bg-black text-white py-20 md:py-32">
+      <section className="relative bg-[#1f273a] text-white py-20 md:py-32">
         <div className="container mx-auto px-4 md:px-6 flex flex-col items-center text-center">
           {/* Temporary text replacement for the logo */}
           <div className="text-4xl md:text-6xl font-bold mb-8 tracking-tight">BSA</div>
@@ -15,10 +15,15 @@ export default function Home() {
             Connecting students at EPFL with blockchain technology, education, and opportunities
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
-            <Button asChild size="lg" className="bg-white text-black hover:bg-gray-200">
+            <Button asChild size="lg" className="bg-white text-[#1f273a] hover:bg-gray-200">
               <Link href="/events">Upcoming Events</Link>
             </Button>
-            <Button asChild size="lg" variant="outline" className="border-white text-white hover:bg-white/10">
+            <Button
+              asChild
+              size="lg"
+              variant="outline"
+              className="border-white text-white hover:bg-white/10 bg-transparent"
+            >
               <Link href="/articles">Read Articles</Link>
             </Button>
           </div>
@@ -40,7 +45,7 @@ export default function Home() {
                 Our mission is to educate, inspire, and empower the next generation of blockchain innovators and
                 leaders.
               </p>
-              <Button asChild className="flex items-center gap-2">
+              <Button asChild className="flex items-center gap-2 bg-[#1f273a] hover:bg-[#2a3349]">
                 <Link href="/about">
                   Learn More <ArrowRight size={16} />
                 </Link>
@@ -50,7 +55,7 @@ export default function Home() {
               <h3 className="text-xl font-bold mb-4">What We Do</h3>
               <ul className="space-y-4">
                 <li className="flex items-start gap-3">
-                  <div className="bg-black text-white p-2 rounded-full mt-1">
+                  <div className="bg-[#1f273a] text-white p-2 rounded-full mt-1">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path
                         d="M21 14V8C21 6.89543 20.1046 6 19 6H5C3.89543 6 3 6.89543 3 8V14C3 15.1046 3.89543 16 5 16H19C20.1046 16 21 15.1046 21 14Z"
@@ -74,7 +79,7 @@ export default function Home() {
                   </div>
                 </li>
                 <li className="flex items-start gap-3">
-                  <div className="bg-black text-white p-2 rounded-full mt-1">
+                  <div className="bg-[#1f273a] text-white p-2 rounded-full mt-1">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path
                         d="M17 21V19C17 16.7909 15.2091 15 13 15H5C2.79086 15 1 16.7909 1 19V21"
@@ -112,7 +117,7 @@ export default function Home() {
                   </div>
                 </li>
                 <li className="flex items-start gap-3">
-                  <div className="bg-black text-white p-2 rounded-full mt-1">
+                  <div className="bg-[#1f273a] text-white p-2 rounded-full mt-1">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path
                         d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z"
@@ -146,7 +151,7 @@ export default function Home() {
         <div className="container mx-auto px-4 md:px-6">
           <div className="flex flex-col md:flex-row justify-between items-center mb-12">
             <h2 className="text-2xl md:text-4xl font-bold">Upcoming Events</h2>
-            <Button asChild variant="outline" className="mt-4 md:mt-0">
+            <Button asChild variant="outline" className="mt-4 md:mt-0 border-[#1f273a] text-[#1f273a]">
               <Link href="/events" className="flex items-center gap-2">
                 View All Events <ArrowRight size={16} />
               </Link>
@@ -155,39 +160,39 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {/* Event Card 1 */}
             <div className="bg-white rounded-lg shadow-md overflow-hidden">
-              <div className="bg-black text-white p-3 text-sm font-medium">May 15, 2025 • 6:00 PM</div>
+              <div className="bg-[#1f273a] text-white p-3 text-sm font-medium">May 15, 2025 • 6:00 PM</div>
               <div className="p-6">
                 <h3 className="text-xl font-bold mb-2">Blockchain Development Workshop</h3>
                 <p className="text-gray-600 mb-4">
                   Learn the fundamentals of blockchain development with hands-on exercises.
                 </p>
-                <Button asChild className="w-full">
+                <Button asChild className="w-full bg-[#1f273a] hover:bg-[#2a3349]">
                   <Link href="/events/blockchain-workshop">Register Now</Link>
                 </Button>
               </div>
             </div>
             {/* Event Card 2 */}
             <div className="bg-white rounded-lg shadow-md overflow-hidden">
-              <div className="bg-black text-white p-3 text-sm font-medium">June 2, 2025 • 5:30 PM</div>
+              <div className="bg-[#1f273a] text-white p-3 text-sm font-medium">June 2, 2025 • 5:30 PM</div>
               <div className="p-6">
                 <h3 className="text-xl font-bold mb-2">Crypto Market Analysis</h3>
                 <p className="text-gray-600 mb-4">
                   Expert panel discussing current trends and future predictions in cryptocurrency.
                 </p>
-                <Button asChild className="w-full">
+                <Button asChild className="w-full bg-[#1f273a] hover:bg-[#2a3349]">
                   <Link href="/events/crypto-market-analysis">Register Now</Link>
                 </Button>
               </div>
             </div>
             {/* Event Card 3 */}
             <div className="bg-white rounded-lg shadow-md overflow-hidden">
-              <div className="bg-black text-white p-3 text-sm font-medium">June 20, 2025 • 10:00 AM</div>
+              <div className="bg-[#1f273a] text-white p-3 text-sm font-medium">June 20, 2025 • 10:00 AM</div>
               <div className="p-6">
                 <h3 className="text-xl font-bold mb-2">BSA Annual Hackathon</h3>
                 <p className="text-gray-600 mb-4">
                   48-hour hackathon to build innovative blockchain solutions with mentorship.
                 </p>
-                <Button asChild className="w-full">
+                <Button asChild className="w-full bg-[#1f273a] hover:bg-[#2a3349]">
                   <Link href="/events/annual-hackathon">Register Now</Link>
                 </Button>
               </div>
@@ -201,7 +206,7 @@ export default function Home() {
         <div className="container mx-auto px-4 md:px-6">
           <div className="flex flex-col md:flex-row justify-between items-center mb-12">
             <h2 className="text-2xl md:text-4xl font-bold">Latest Articles</h2>
-            <Button asChild variant="outline" className="mt-4 md:mt-0">
+            <Button asChild variant="outline" className="mt-4 md:mt-0 border-[#1f273a] text-[#1f273a]">
               <Link href="/articles" className="flex items-center gap-2">
                 View All Articles <ArrowRight size={16} />
               </Link>
@@ -221,7 +226,11 @@ export default function Home() {
                 <p className="text-gray-600 mb-4">
                   Exploring the potential impact of DeFi on traditional financial systems.
                 </p>
-                <Button asChild variant="outline" className="w-full">
+                <Button
+                  asChild
+                  variant="outline"
+                  className="w-full border-[#1f273a] text-[#1f273a] hover:bg-[#1f273a] hover:text-white"
+                >
                   <Link href="/articles/future-of-defi">Read Article</Link>
                 </Button>
               </div>
@@ -239,7 +248,11 @@ export default function Home() {
                 <p className="text-gray-600 mb-4">
                   A deep dive into Proof of Work, Proof of Stake, and other consensus algorithms.
                 </p>
-                <Button asChild variant="outline" className="w-full">
+                <Button
+                  asChild
+                  variant="outline"
+                  className="w-full border-[#1f273a] text-[#1f273a] hover:bg-[#1f273a] hover:text-white"
+                >
                   <Link href="/articles/consensus-mechanisms">Read Article</Link>
                 </Button>
               </div>
@@ -257,7 +270,11 @@ export default function Home() {
                 <p className="text-gray-600 mb-4">
                   A beginner's guide to building applications for the decentralized web.
                 </p>
-                <Button asChild variant="outline" className="w-full">
+                <Button
+                  asChild
+                  variant="outline"
+                  className="w-full border-[#1f273a] text-[#1f273a] hover:bg-[#1f273a] hover:text-white"
+                >
                   <Link href="/articles/web3-development">Read Article</Link>
                 </Button>
               </div>
@@ -267,14 +284,14 @@ export default function Home() {
       </section>
 
       {/* Join Us Section */}
-      <section className="py-16 bg-black text-white">
+      <section className="py-16 bg-[#1f273a] text-white">
         <div className="container mx-auto px-4 md:px-6 text-center">
           <h2 className="text-2xl md:text-4xl font-bold mb-6">Join the BSA Community</h2>
           <p className="text-lg mb-8 max-w-2xl mx-auto">
             Become a member of the Blockchain Student Association and get access to exclusive events, resources, and
             networking opportunities.
           </p>
-          <Button asChild size="lg" className="bg-white text-black hover:bg-gray-200">
+          <Button asChild size="lg" className="bg-white text-[#1f273a] hover:bg-gray-200">
             <Link href="/join">Become a Member</Link>
           </Button>
         </div>
