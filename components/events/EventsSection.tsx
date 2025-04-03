@@ -187,17 +187,31 @@ export default function EventsSection() {
             </a>
           </Button>
         </div>
-        <div className="flex justify-center w-full">
-          <div className="w-full max-w-[1200px]">
-            <iframe
-              ref={iframeRef}
-              src="https://lu.ma/embed/calendar/cal-6mYbk8qJrIPIXhD/events"
-              className="w-full aspect-[16/9]"
-              style={{ border: '1px solid #bfcbda88', borderRadius: '4px' }}
-              allowFullScreen
-              aria-hidden="false"
-              tabIndex={0}
-            />
+        <div className="flex gap-8 items-start">
+          <div className="flex justify-left w-full md:w-2/3">
+            <div className="w-full max-w-[900px]">
+              <iframe
+                ref={iframeRef}
+                src="https://lu.ma/embed/calendar/cal-6mYbk8qJrIPIXhD/events"
+                className="w-full aspect-[14/5.8]"
+                style={{ border: '1px solid #bfcbda88', borderRadius: '4px' }}
+                allowFullScreen
+                aria-hidden="false"
+                tabIndex={0}
+              />
+            </div>
+          </div>
+          <div className="hidden md:block w-1/3 p-6 bg-white rounded-lg shadow-sm">
+            <h3 className="text-xl font-semibold mb-4 text-[#1f273a]">Join Our Community</h3>
+            <p className="text-gray-600 mb-4">
+              Stay connected with our vibrant community through our regular events and meetups. Whether you&apos;re a beginner or an expert, there&apos;s something for everyone.
+            </p>
+            <p className="text-gray-600 mb-4">
+              Register for any upcoming event and become part of our growing network of passionate individuals. We can&apos;t wait to meet you!
+            </p>
+            <p className="text-gray-600">
+              From hands-on workshops to thought-provoking discussions, our events are carefully crafted to inspire, educate, and foster meaningful connections. Join us in creating moments that spark innovation and lasting friendships.
+            </p>
           </div>
         </div>
       </div>
