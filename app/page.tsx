@@ -4,34 +4,15 @@ import { ArrowRight } from "lucide-react"
 import EventsSection from "@/components/events/EventsSection"
 import StartupsSection from "@/components/startups/StartupsSection"
 import ArticlesSection from "@/components/articles/ArticlesSection"
+import HeroSection from "@/components/bsa-hero"
+import BSAHeroLogoParticles from "@/components/bsa-logo-particles-hero"
 
 export default function Home() {
   return (
     <main className="flex flex-col min-h-screen">
-      {/* Hero Section */}
-      <section id="hero" className="relative bg-[#1f273a] text-white py-20 md:py-32">
-        <div className="container mx-auto px-4 md:px-6 flex flex-col items-center text-center">
-          {/* Temporary text replacement for the logo */}
-          <div className="text-4xl md:text-6xl font-bold mb-8 tracking-tight">BSA</div>
-          <h1 className="text-3xl md:text-5xl font-bold mb-4">Blockchain Student Association</h1>
-          <p className="text-lg md:text-xl mb-8 max-w-2xl">
-            Connecting students at EPFL with blockchain technology, education, and opportunities
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4">
-            <Button asChild size="lg" className="bg-white text-[#1f273a] hover:bg-gray-200">
-              <Link href="/events">Upcoming Events</Link>
-            </Button>
-            <Button
-              asChild
-              size="lg"
-              variant="outline"
-              className="border-white text-white hover:bg-white/10 bg-transparent"
-            >
-              <Link href="/articles">Read Articles</Link>
-            </Button>
-          </div>
-        </div>
-      </section>
+      
+      <BSAHeroLogoParticles />
+
 
       {/* About Section */}
       <section id="about" className="py-16 md:py-24 bg-white">

@@ -14,6 +14,11 @@ const spaceGrotesk = Space_Grotesk({
 export const metadata: Metadata = {
   title: "Blockchain Student Association | EPFL",
   description: "The official website of the Blockchain Student Association at EPFL",
+  icons: {
+    icon: [
+      { url: '/favicon.ico', type: 'image/x-icon' },
+    ]
+  }
 }
 
 export default function RootLayout({
