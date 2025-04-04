@@ -44,17 +44,15 @@ export default function BSAHeroLogoParticles() {
       ctx.save()
 
       // Increase logo size
-      const logoHeight = isMobile ? 300 : 400 // Adjusted for half-width container
-      const logoWidth = logoHeight * (135 / 151)
+      const logoHeight = isMobile ? 300 : 500 // Reduced from 440/720
+      const bsaLogoWidth = logoHeight * (135 / 151)
 
       // Position the logo on the right side of the canvas
       const xPosition = isMobile
-        ? canvas.width / 2 - logoWidth / 2 // Center on mobile
-        : canvas.width / 2 - logoWidth / 2 // Center on desktop
+        ? canvas.width / 2 - bsaLogoWidth / 2 // Center on mobile
+        : canvas.width / 2
 
-      const yPosition = isMobile
-        ? canvas.height / 2 - logoHeight / 2 // Center vertically on mobile
-        : canvas.height / 2 - logoHeight / 2 // Center vertically on desktop
+      const yPosition = canvas.height / 2 - logoHeight / 1.5
 
       ctx.translate(xPosition, yPosition)
 
@@ -100,7 +98,6 @@ export default function BSAHeroLogoParticles() {
     }
 
     function createInitialParticles(scale: number) {
-      if (!canvas) return
       const baseParticleCount = 7000 // Increased base count for higher density
       const particleCount = Math.floor(baseParticleCount * Math.sqrt((canvas.width * canvas.height) / (1920 * 1080)))
       for (let i = 0; i < particleCount; i++) {
@@ -227,41 +224,38 @@ export default function BSAHeroLogoParticles() {
   }, [isMobile])
 
   return (
-    <div className="relative w-full h-[80vh] flex flex-col md:flex-row items-center justify-center bg-black overflow-hidden">
+    <div className="relative w-full h-[80vh] flex flex-col items-center justify-center bg-black overflow-hidden">
+      <canvas
+        ref={canvasRef}
+        className="w-full h-[100vh] absolute top-[-10vh] left-0 touch-none"
+        aria-label="Interactive particle effect with BSA logo"
+      />
+
       {/* Text content on the left */}
-      <div className="w-full md:w-1/2 h-full flex flex-col items-center justify-center p-8">
-        <div className="text-white max-w-md text-center md:text-left">
-          <h1
-            className="text-3xl md:text-4xl lg:text-5xl font-extrabold mb-4 
+      <div
+        className="absolute z-10 text-white max-w-md px-6 md:px-10 lg:px-0 
+                     md:left-[10%] lg:left-[15%] 
+                     text-center md:text-left"
+      >
+        <h1
+          className="text-3xl md:text-4xl lg:text-5xl font-extrabold mb-4 
                        tracking-tight bg-clip-text text-transparent 
                        bg-gradient-to-r from-white to-[#7B68EE]
                        font-sans"
-          >
-            Blockchain Student Association
-          </h1>
-          <p className="text-lg md:text-xl text-gray-300 leading-relaxed">
-            Bridging academia and industry to empower the next generation of blockchain innovators. Explore, learn, and
-            build the decentralized future.
-          </p>
-          <button
-            className="mt-8 px-6 py-3 bg-[#1f273a] hover:bg-[#2a3349] text-white 
+        >
+          Blockchain Student Association
+        </h1>
+        <p className="text-lg md:text-xl text-gray-300 leading-relaxed">
+          Bridging academia and industry to empower the next generation of blockchain innovators. Explore, learn, and
+          build the decentralized future.
+        </p>
+        <button
+          className="mt-8 px-6 py-3 bg-[#1f273a] hover:bg-[#2a3349] text-white 
                          rounded-lg font-medium transition-colors duration-300 
                          shadow-lg shadow-[#1f273a]/20"
-          >
-            Join the Community
-          </button>
-        </div>
-      </div>
-
-      {/* Canvas container on the right */}
-      <div className="w-full md:w-1/2 h-full relative flex items-center justify-center">
-        <div className="relative w-full h-full" style={{ aspectRatio: '1/1' }}>
-          <canvas
-            ref={canvasRef}
-            className="absolute top-0 left-0 w-full h-full touch-none"
-            aria-label="Interactive particle effect with BSA logo"
-          />
-        </div>
+        >
+          Join the Community
+        </button>
       </div>
     </div>
   )
