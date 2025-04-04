@@ -8,6 +8,7 @@ export default function BSAHeroLogoParticles() {
   const mousePositionRef = useRef({ x: 0, y: 0 })
   const isTouchingRef = useRef(false)
   const [isMobile, setIsMobile] = useState(false)
+  const wavesRef = useRef<{x: number, y: number, radius: number, strength: number}[]>([])
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -98,6 +99,7 @@ export default function BSAHeroLogoParticles() {
     }
 
     function createInitialParticles(scale: number) {
+      if (!canvas) return
       const baseParticleCount = 7000 // Increased base count for higher density
       const particleCount = Math.floor(baseParticleCount * Math.sqrt((canvas.width * canvas.height) / (1920 * 1080)))
       for (let i = 0; i < particleCount; i++) {
@@ -115,10 +117,32 @@ export default function BSAHeroLogoParticles() {
       ctx.fillRect(0, 0, canvas.width, canvas.height)
 
       const { x: mouseX, y: mouseY } = mousePositionRef.current
-      const maxDistance = 240
+      const maxDistance = 160
+
+      // Update and draw waves
+      for (let i = wavesRef.current.length - 1; i >= 0; i--) {
+        const wave = wavesRef.current[i]
+        wave.radius += 5
+        wave.strength *= 0.95
+
+        if (wave.strength < 0.01) {
+          wavesRef.current.splice(i, 1)
+          continue
+        }
+
+        ctx.beginPath()
+        ctx.arc(wave.x, wave.y, wave.radius, 0, Math.PI * 2)
+        ctx.strokeStyle = `rgba(123, 104, 238, ${wave.strength * 0.8})`
+        ctx.lineWidth = 4
+        ctx.stroke()
+      }
 
       for (let i = 0; i < particles.length; i++) {
         const p = particles[i]
+        let totalMoveX = 0
+        let totalMoveY = 0
+
+        // Mouse repulsion
         const dx = mouseX - p.x
         const dy = mouseY - p.y
         const distance = Math.sqrt(dx * dx + dy * dy)
@@ -126,18 +150,29 @@ export default function BSAHeroLogoParticles() {
         if (distance < maxDistance && (isTouchingRef.current || !("ontouchstart" in window))) {
           const force = (maxDistance - distance) / maxDistance
           const angle = Math.atan2(dy, dx)
-          const moveX = Math.cos(angle) * force * 60
-          const moveY = Math.sin(angle) * force * 60
-          p.x = p.baseX - moveX
-          p.y = p.baseY - moveY
-
-          ctx.fillStyle = p.scatteredColor
-        } else {
-          p.x += (p.baseX - p.x) * 0.1
-          p.y += (p.baseY - p.y) * 0.1
-          ctx.fillStyle = "white"
+          totalMoveX += Math.cos(angle) * force * 60
+          totalMoveY += Math.sin(angle) * force * 60
         }
 
+        // Wave effect
+        for (const wave of wavesRef.current) {
+          const waveDx = wave.x - p.x
+          const waveDy = wave.y - p.y
+          const waveDistance = Math.sqrt(waveDx * waveDx + waveDy * waveDy)
+          const waveEffect = Math.abs(waveDistance - wave.radius) < 30
+
+          if (waveEffect) {
+            const waveForce = wave.strength * (1 - Math.abs(waveDistance - wave.radius) / 30)
+            const waveAngle = Math.atan2(waveDy, waveDx)
+            totalMoveX += Math.cos(waveAngle) * waveForce * 100
+            totalMoveY += Math.sin(waveAngle) * waveForce * 100
+          }
+        }
+
+        p.x = p.baseX - totalMoveX
+        p.y = p.baseY - totalMoveY
+
+        ctx.fillStyle = "white"
         ctx.fillRect(p.x, p.y, p.size, p.size)
 
         p.life--
@@ -180,13 +215,13 @@ export default function BSAHeroLogoParticles() {
     }
 
     const handleMouseMove = (e: MouseEvent) => {
-      handleMove(e.clientX, e.clientY)
+      handleMove(e.pageX, e.pageY)
     }
 
     const handleTouchMove = (e: TouchEvent) => {
       if (e.touches.length > 0) {
         e.preventDefault()
-        handleMove(e.touches[0].clientX, e.touches[0].clientY)
+        handleMove(e.touches[0].pageX, e.touches[0].pageY)
       }
     }
 
@@ -205,12 +240,22 @@ export default function BSAHeroLogoParticles() {
       }
     }
 
+    const handleClick = (e: MouseEvent) => {
+      wavesRef.current.push({
+        x: e.pageX,
+        y: e.pageY,
+        radius: 0,
+        strength: 1
+      })
+    }
+
     window.addEventListener("resize", handleResize)
     canvas.addEventListener("mousemove", handleMouseMove)
     canvas.addEventListener("touchmove", handleTouchMove, { passive: false })
     canvas.addEventListener("mouseleave", handleMouseLeave)
     canvas.addEventListener("touchstart", handleTouchStart)
     canvas.addEventListener("touchend", handleTouchEnd)
+    canvas.addEventListener("click", handleClick)
 
     return () => {
       window.removeEventListener("resize", handleResize)
@@ -219,6 +264,7 @@ export default function BSAHeroLogoParticles() {
       canvas.removeEventListener("mouseleave", handleMouseLeave)
       canvas.removeEventListener("touchstart", handleTouchStart)
       canvas.removeEventListener("touchend", handleTouchEnd)
+      canvas.removeEventListener("click", handleClick)
       cancelAnimationFrame(animationFrameId)
     }
   }, [isMobile])
