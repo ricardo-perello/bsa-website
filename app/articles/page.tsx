@@ -3,7 +3,7 @@
 import { Metadata } from "next"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { ArrowRight, Search, Calendar, ExternalLink } from "lucide-react"
+import { ArrowRight, Search, Calendar, ExternalLink, ChevronDown, ChevronUp } from "lucide-react"
 import { useEffect, useState } from "react"
 
 export default function ArticlesPage() {
@@ -12,6 +12,7 @@ export default function ArticlesPage() {
   const [error, setError] = useState<string | null>(null)
   const [searchTerm, setSearchTerm] = useState("")
   const [selectedCategory, setSelectedCategory] = useState("all")
+  const [showAllCategories, setShowAllCategories] = useState(false)
 
   useEffect(() => {
     const fetchArticles = async () => {
@@ -34,12 +35,19 @@ export default function ArticlesPage() {
     fetchArticles()
   }, [])
 
-  // Get all unique categories from articles
-  const allCategories = Array.from(
-    new Set(
-      articles.flatMap(article => article.categories || [])
-    )
-  ).sort()
+  // Get all unique categories from articles, sorted by frequency
+  const categoryCounts = articles.reduce((acc, article) => {
+    if (article.categories) {
+      article.categories.forEach((category: string) => {
+        acc[category] = (acc[category] || 0) + 1
+      })
+    }
+    return acc
+  }, {} as Record<string, number>)
+
+  const allCategories = Object.entries(categoryCounts)
+    .sort(([, a], [, b]) => (b as number) - (a as number)) // Sort by frequency (descending)
+    .map(([category]) => category)
 
   // Filter articles based on search term and category
   const filteredArticles = articles.filter(article => {
@@ -51,9 +59,17 @@ export default function ArticlesPage() {
   })
 
   const categories = [
-    { id: "all", name: "All Articles" },
-    ...allCategories.map(cat => ({ id: cat, name: cat.charAt(0).toUpperCase() + cat.slice(1) }))
+    { id: "all", name: "All Articles", count: articles.length },
+    ...allCategories.map(cat => ({ 
+      id: cat, 
+      name: cat.charAt(0).toUpperCase() + cat.slice(1),
+      count: categoryCounts[cat]
+    }))
   ]
+
+  // Show first 6 categories by default, rest can be toggled
+  const visibleCategories = showAllCategories ? categories : categories.slice(0, 6)
+  const hasMoreCategories = categories.length > 6
 
   return (
     <div className="min-h-screen bg-white">
@@ -86,8 +102,9 @@ export default function ArticlesPage() {
       <section className="py-8 bg-gray-50">
         <div className="container mx-auto px-4 md:px-6">
           <div className="max-w-6xl mx-auto">
-            <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
-              <div className="relative flex-1 max-w-md">
+            <div className="flex flex-col gap-4">
+              {/* Search Bar */}
+              <div className="relative max-w-md">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
                 <Input
                   type="text"
@@ -97,17 +114,41 @@ export default function ArticlesPage() {
                   className="pl-10"
                 />
               </div>
-              <div className="flex gap-2 flex-wrap">
-                {categories.map((category) => (
+              
+              {/* Category Filters */}
+              <div className="space-y-2">
+                <div className="text-sm font-medium text-gray-700">Filter by Category:</div>
+                <div className="flex flex-wrap gap-2 max-h-32 overflow-y-auto">
+                  {visibleCategories.map((category) => (
+                    <Button
+                      key={category.id}
+                      variant={selectedCategory === category.id ? "default" : "outline"}
+                      onClick={() => setSelectedCategory(category.id)}
+                      className={selectedCategory === category.id ? "bg-[#1f273a] text-white" : ""}
+                      size="sm"
+                    >
+                      {category.name} ({category.count})
+                    </Button>
+                  ))}
+                </div>
+                {hasMoreCategories && (
                   <Button
-                    key={category.id}
-                    variant={selectedCategory === category.id ? "default" : "outline"}
-                    onClick={() => setSelectedCategory(category.id)}
-                    className={selectedCategory === category.id ? "bg-[#1f273a] text-white" : ""}
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setShowAllCategories(!showAllCategories)}
+                    className="text-[#1f273a] hover:text-[#2a3349]"
                   >
-                    {category.name}
+                    {showAllCategories ? (
+                      <>
+                        Show Less <ChevronUp size={16} className="ml-1" />
+                      </>
+                    ) : (
+                      <>
+                        Show {categories.length - 6} More <ChevronDown size={16} className="ml-1" />
+                      </>
+                    )}
                   </Button>
-                ))}
+                )}
               </div>
             </div>
           </div>

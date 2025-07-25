@@ -182,9 +182,9 @@ export default function EventsSection() {
         <div className="flex flex-col md:flex-row justify-between items-center mb-12">
           <h2 className="text-2xl md:text-4xl font-bold">Upcoming Events</h2>
           <Button asChild variant="outline" className="mt-4 md:mt-0 border-[#1f273a] text-[#1f273a]">
-            <a href={LUMA_URL} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
+            <Link href="/events" className="flex items-center gap-2">
               View All Events <ArrowRight size={16} />
-            </a>
+            </Link>
           </Button>
         </div>
         <div className="flex gap-8 items-start">
