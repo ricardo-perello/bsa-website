@@ -41,7 +41,7 @@ export default function Home() {
       <BSAHeroLogoParticles />
 
       {/* About Section */}
-      <section ref={aboutRef} id="about" className="py-24 md:py-32 bg-gradient-to-b from-transparent to-[#0a0a0a]/50">
+      <section ref={aboutRef} id="about" className="py-12 md:py-16 bg-gradient-to-b from-transparent to-[#0a0a0a]/50">
         <div className="container mx-auto px-4 md:px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div className="scroll-trigger">
@@ -70,7 +70,7 @@ export default function Home() {
             </div>
             
             <div className="scroll-trigger" style={{ animationDelay: '0.2s' }}>
-              <div className="glass rounded-2xl p-8 border border-[#6366f1]/20">
+              <div className="glass rounded-2xl p-8 border border-[#6366f1]/20 min-h-[400px]">
                 <h3 className="text-2xl font-bold mb-8 text-white">What We Do</h3>
                 <div className="space-y-6">
                   <div className="flex items-start gap-4 group hover-lift">
@@ -79,7 +79,7 @@ export default function Home() {
                     </div>
                     <div>
                       <h4 className="text-lg font-semibold text-white mb-2">Educational Workshops</h4>
-                      <p className="text-gray-300">Regular workshops on blockchain technology, smart contract development, and DeFi protocols</p>
+                      <p className="text-gray-300 leading-relaxed">Regular workshops on blockchain technology, smart contract development, and DeFi protocols</p>
                     </div>
                   </div>
                   
@@ -89,7 +89,7 @@ export default function Home() {
                     </div>
                     <div>
                       <h4 className="text-lg font-semibold text-white mb-2">Networking Events</h4>
-                      <p className="text-gray-300">Connect with industry professionals, researchers, and like-minded students</p>
+                      <p className="text-gray-300 leading-relaxed">Connect with industry professionals, researchers, and like-minded students</p>
                     </div>
                   </div>
                   
@@ -99,7 +99,7 @@ export default function Home() {
                     </div>
                     <div>
                       <h4 className="text-lg font-semibold text-white mb-2">Hackathons & Projects</h4>
-                      <p className="text-gray-300">Hands-on experience building blockchain applications and innovative solutions</p>
+                      <p className="text-gray-300 leading-relaxed">Hands-on experience building blockchain applications and innovative solutions</p>
                     </div>
                   </div>
                 </div>
@@ -119,7 +119,7 @@ export default function Home() {
       <ArticlesSection />
 
       {/* Join Us Section */}
-      <section ref={joinRef} id="join" className="py-24 md:py-32 bg-gradient-to-t from-[#0a0a0a] to-transparent">
+      <section ref={joinRef} id="join" className="py-12 md:py-16 bg-gradient-to-t from-[#0a0a0a] to-transparent">
         <div className="container mx-auto px-4 md:px-6 text-center">
           <div className="scroll-trigger">
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#6366f1]/10 border border-[#6366f1]/20 rounded-full text-sm text-[#6366f1] mb-6">

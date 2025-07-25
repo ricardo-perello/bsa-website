@@ -19,6 +19,10 @@ export default function ArticlesPage() {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add('animate')
+            console.log('Element animated:', entry.target)
+          } else {
+            // Remove animate class when element goes out of view to allow re-animation
+            entry.target.classList.remove('animate')
           }
         })
       },
@@ -28,13 +32,24 @@ export default function ArticlesPage() {
       }
     )
 
-    const scrollTriggers = document.querySelectorAll('.scroll-trigger')
-    scrollTriggers.forEach((el) => observer.observe(el))
+    const observeElements = () => {
+      const scrollTriggers = document.querySelectorAll('.scroll-trigger')
+      console.log('Found scroll triggers:', scrollTriggers.length)
+      scrollTriggers.forEach((el) => observer.observe(el))
+    }
+
+    // Initial observation
+    observeElements()
+
+    // Re-observe when articles change (for dynamic content)
+    const timeoutId = setTimeout(observeElements, 100)
 
     return () => {
+      clearTimeout(timeoutId)
+      const scrollTriggers = document.querySelectorAll('.scroll-trigger')
       scrollTriggers.forEach((el) => observer.unobserve(el))
     }
-  }, [articles]) // Re-run when articles change
+  }, [articles]) // Re-add articles dependency to re-run when articles change
 
   useEffect(() => {
     const fetchArticles = async () => {
@@ -99,43 +114,39 @@ export default function ArticlesPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#0a0a0a] to-[#1a1a1a]">
       {/* Hero Section */}
-      <section className="py-24 md:py-32 bg-gradient-to-b from-[#0a0a0a]/50 to-transparent">
+      <section className="py-12 md:py-16 bg-gradient-to-b from-[#0a0a0a]/50 to-transparent">
         <div className="container mx-auto px-4 md:px-6">
           <div className="max-w-4xl mx-auto text-center">
             <div className="scroll-trigger inline-flex items-center gap-2 px-4 py-2 bg-[#6366f1]/10 border border-[#6366f1]/20 rounded-full text-sm text-[#6366f1] mb-6">
               <BookOpen size={16} />
               <span>Articles</span>
             </div>
-            <h1 className="scroll-trigger text-4xl md:text-6xl font-bold mb-6 text-white">
+            <h1 className="scroll-trigger text-4xl md:text-6xl font-bold mb-8 text-white">
               Latest
               <span className="gradient-text block">Insights</span>
             </h1>
             <p className="scroll-trigger text-xl md:text-2xl text-gray-300 mb-8 leading-relaxed">
-              Insights, tutorials, and analysis from the BSA community
+              Explore our latest articles on blockchain technology, DeFi, NFTs, and the future of Web3
             </p>
-            <div className="scroll-trigger flex flex-col sm:flex-row gap-4 justify-center">
-              <Button 
-                asChild
-                className="bg-gradient-to-r from-[#6366f1] to-[#7c3aed] hover:from-[#7c3aed] hover:to-[#ec4899] text-white border-0 hover-lift"
-              >
-                <a href="https://medium.com/bsa-epfl" target="_blank" rel="noopener noreferrer">
-                  <ExternalLink size={16} className="mr-2" />
-                  Visit our Medium
-                </a>
-              </Button>
-            </div>
           </div>
         </div>
       </section>
 
       {/* Search and Filter Section */}
-      <section className="py-16 bg-gradient-to-b from-transparent to-[#0a0a0a]/50">
+      <section className="py-12 md:py-16 bg-gradient-to-b from-transparent to-[#0a0a0a]/50">
         <div className="container mx-auto px-4 md:px-6">
           <div className="max-w-6xl mx-auto">
-            <div className="scroll-trigger glass rounded-2xl p-8 border border-[#6366f1]/20">
-              <div className="flex flex-col gap-6">
-                {/* Search Bar */}
-                <div className="relative max-w-md">
+            <div className="scroll-trigger text-center mb-12">
+              <h2 className="text-3xl md:text-5xl font-bold mb-8 text-white">
+                Browse
+                <span className="gradient-text block">Articles</span>
+              </h2>
+            </div>
+            
+            {/* Search and Filter Controls */}
+            <div className="scroll-trigger mb-8">
+              <div className="flex flex-col md:flex-row gap-4 items-center justify-center">
+                <div className="relative w-full max-w-md">
                   <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
                   <Input
                     type="text"
@@ -146,67 +157,87 @@ export default function ArticlesPage() {
                   />
                 </div>
                 
-                {/* Category Filters */}
-                <div className="space-y-3">
-                  <div className="text-sm font-medium text-gray-300">Filter by Category:</div>
-                  <div className="flex flex-wrap gap-2 max-h-32 overflow-y-auto">
-                    {visibleCategories.map((category) => (
-                      <Button
-                        key={category.id}
-                        variant={selectedCategory === category.id ? "default" : "outline"}
-                        onClick={() => setSelectedCategory(category.id)}
-                        className={selectedCategory === category.id 
-                          ? "bg-gradient-to-r from-[#6366f1] to-[#7c3aed] text-white border-0" 
-                          : "border-[#6366f1]/20 text-[#6366f1] hover:bg-[#6366f1] hover:text-white"
-                        }
-                        size="sm"
-                      >
-                        {category.name} ({category.count})
-                      </Button>
-                    ))}
-                  </div>
-                  {hasMoreCategories && (
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => setShowAllCategories(!showAllCategories)}
-                      className="text-[#6366f1] hover:text-[#7c3aed]"
-                    >
-                      {showAllCategories ? (
-                        <>
-                          Show Less <ChevronUp size={16} className="ml-1" />
-                        </>
-                      ) : (
-                        <>
-                          Show {categories.length - 6} More <ChevronDown size={16} className="ml-1" />
-                        </>
-                      )}
-                    </Button>
+                <div className="relative">
+                  <Button
+                    variant="outline"
+                    onClick={() => setShowAllCategories(!showAllCategories)}
+                    className="border-[#6366f1]/20 text-[#6366f1] hover:bg-[#6366f1] hover:text-white"
+                  >
+                    {showAllCategories ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+                    Categories
+                  </Button>
+                  
+                  {showAllCategories && (
+                    <div className="absolute top-full left-0 mt-2 bg-[#1a1a1a] border border-[#6366f1]/20 rounded-lg p-4 z-10 min-w-[200px]">
+                      <div className="space-y-2">
+                        {categories.map((category) => (
+                          <button
+                            key={category.id}
+                            onClick={() => {
+                              setSelectedCategory(category.id)
+                              setShowAllCategories(false)
+                            }}
+                            className={`w-full text-left px-3 py-2 rounded-lg transition-colors ${
+                              selectedCategory === category.id
+                                ? 'bg-[#6366f1] text-white'
+                                : 'text-gray-300 hover:bg-[#6366f1]/10'
+                            }`}
+                          >
+                            {category.name} ({category.count})
+                          </button>
+                        ))}
+                      </div>
+                    </div>
                   )}
                 </div>
               </div>
+            </div>
+
+            {/* Category Pills */}
+            <div className="scroll-trigger flex flex-wrap gap-2 justify-center mb-8">
+              {visibleCategories.map((category) => (
+                <button
+                  key={category.id}
+                  onClick={() => setSelectedCategory(category.id)}
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                    selectedCategory === category.id
+                      ? 'bg-[#6366f1] text-white'
+                      : 'bg-[#6366f1]/10 text-[#6366f1] border border-[#6366f1]/20 hover:bg-[#6366f1]/20'
+                  }`}
+                >
+                  {category.name} ({category.count})
+                </button>
+              ))}
+              {hasMoreCategories && (
+                <button
+                  onClick={() => setShowAllCategories(!showAllCategories)}
+                  className="px-4 py-2 rounded-full text-sm font-medium bg-[#6366f1]/10 text-[#6366f1] border border-[#6366f1]/20 hover:bg-[#6366f1]/20"
+                >
+                  {showAllCategories ? 'Show Less' : `+${categories.length - 6} More`}
+                </button>
+              )}
             </div>
           </div>
         </div>
       </section>
 
       {/* Articles Grid */}
-      <section className="py-24 bg-gradient-to-b from-[#0a0a0a]/50 to-transparent">
+      <section className="py-12 md:py-16 bg-gradient-to-b from-[#0a0a0a]/50 to-transparent">
         <div className="container mx-auto px-4 md:px-6">
-          <div className="max-w-6xl mx-auto">
+          <div className="max-w-7xl mx-auto">
             {loading ? (
-              <div className="scroll-trigger text-center py-12">
+              <div className="text-center py-12">
                 <div className="inline-flex items-center gap-2 text-gray-300">
                   <div className="w-6 h-6 border-2 border-[#6366f1] border-t-transparent rounded-full animate-spin"></div>
                   Loading articles...
                 </div>
               </div>
             ) : error ? (
-              <div className="scroll-trigger text-center py-12">
+              <div className="text-center py-12">
                 <div className="bg-[#1a1a1a] rounded-2xl p-8 border border-[#6366f1]/20 max-w-md mx-auto">
                   <p className="text-red-400 mb-4">{error}</p>
                   <Button 
-                    onClick={() => window.location.reload()} 
+                    onClick={() => window.location.reload()}
                     className="bg-gradient-to-r from-[#6366f1] to-[#7c3aed] hover:from-[#7c3aed] hover:to-[#ec4899] text-white border-0"
                   >
                     Try Again
@@ -214,107 +245,100 @@ export default function ArticlesPage() {
                 </div>
               </div>
             ) : displayArticles.length === 0 ? (
-              <div className="scroll-trigger text-center py-12">
+              <div className="text-center py-12">
                 <div className="bg-[#1a1a1a] rounded-2xl p-8 border border-[#6366f1]/20 max-w-md mx-auto">
-                  <p className="text-gray-300 text-lg mb-4">
-                    {searchTerm || selectedCategory !== "all" 
-                      ? "No articles found matching your criteria." 
-                      : "No articles available at the moment."}
-                  </p>
-                  {(searchTerm || selectedCategory !== "all") && (
-                    <Button 
-                      onClick={() => {
-                        setSearchTerm("")
-                        setSelectedCategory("all")
-                      }}
-                      variant="outline"
-                      className="border-[#6366f1] text-[#6366f1] hover:bg-[#6366f1] hover:text-white"
-                    >
-                      Clear Filters
-                    </Button>
-                  )}
+                  <p className="text-gray-300 mb-4">No articles found matching your criteria.</p>
+                  <Button 
+                    onClick={() => {
+                      setSearchTerm("")
+                      setSelectedCategory("all")
+                    }}
+                    className="bg-gradient-to-r from-[#6366f1] to-[#7c3aed] hover:from-[#7c3aed] hover:to-[#ec4899] text-white border-0"
+                  >
+                    Clear Filters
+                  </Button>
                 </div>
               </div>
             ) : (
-              <>
-                <div className="scroll-trigger flex justify-between items-center mb-8">
-                  <h2 className="text-2xl font-bold text-white">
-                    {displayArticles.length} Article{displayArticles.length !== 1 ? 's' : ''}
-                  </h2>
-                  <p className="text-gray-400">
-                    Showing {displayArticles.length} of {articles.length} articles
-                  </p>
-                </div>
-                
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                  {displayArticles.map((article, idx) => (
-                    <div key={idx} className="bg-[#1a1a1a] rounded-2xl overflow-hidden border border-[#6366f1]/20 hover-lift animate-fade-in" style={{ animationDelay: `${0.2 + idx * 0.1}s` }}>
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {displayArticles.map((article, idx) => (
+                  <div 
+                    key={article.title} 
+                    className="scroll-trigger glass rounded-2xl overflow-hidden border border-[#6366f1]/20 hover-lift"
+                    style={{ animationDelay: `${0.2 + idx * 0.1}s` }}
+                  >
+                    {/* Article Thumbnail */}
+                    <div className="relative h-48 overflow-hidden">
                       {article.thumbnail ? (
-                        <div className="relative h-48 overflow-hidden">
-                          <img
-                            src={article.thumbnail}
-                            alt={article.title}
-                            className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
-                          />
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
-                        </div>
+                        <img
+                          src={article.thumbnail}
+                          alt={article.title}
+                          className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                        />
                       ) : (
-                        <div className="relative h-48 bg-gradient-to-br from-[#6366f1]/20 to-[#7c3aed]/20 flex items-center justify-center">
+                        <div className="w-full h-full bg-gradient-to-br from-[#6366f1]/20 to-[#7c3aed]/20 flex items-center justify-center">
                           <BookOpen size={48} className="text-[#6366f1]" />
                         </div>
                       )}
-                      <div className="p-6">
-                        <div className="flex items-center text-sm text-[#6366f1] mb-3">
-                          <Calendar size={16} className="mr-2" />
-                          {article.pubDate ? new Date(article.pubDate).toLocaleDateString() : ""}
-                        </div>
-                        <h3 className="text-xl font-bold mb-3 text-white line-clamp-2">{article.title}</h3>
-                        <p className="text-gray-300 mb-4 line-clamp-3">
-                          {article.contentSnippet?.slice(0, 150)}{article.contentSnippet && article.contentSnippet.length > 150 ? "..." : ""}
-                        </p>
-                        {article.categories && article.categories.length > 0 && (
-                          <div className="flex flex-wrap gap-1 mb-4">
-                            {article.categories.map((category: string, catIdx: number) => (
-                              <span
-                                key={catIdx}
-                                className="px-2 py-1 bg-[#6366f1]/10 text-[#6366f1] text-xs rounded-full border border-[#6366f1]/20"
-                              >
-                                {category.charAt(0).toUpperCase() + category.slice(1)}
-                              </span>
-                            ))}
-                          </div>
-                        )}
-                        <Button
-                          asChild
-                          variant="outline"
-                          className="w-full border-[#6366f1] text-[#6366f1] hover:bg-[#6366f1] hover:text-white hover-lift"
-                        >
-                          <a href={article.link} target="_blank" rel="noopener noreferrer">
-                            Read Article <ArrowRight size={16} className="ml-2" />
-                          </a>
-                        </Button>
-                      </div>
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
                     </div>
-                  ))}
-                </div>
-              </>
+                    
+                    <div className="p-6">
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="flex items-center gap-2 text-sm text-gray-400">
+                          <Calendar size={16} />
+                          {new Date(article.pubDate).toLocaleDateString()}
+                        </div>
+                        {article.categories && article.categories.length > 0 && (
+                          <span className="px-3 py-1 bg-[#6366f1]/10 text-[#6366f1] text-sm rounded-full border border-[#6366f1]/20">
+                            {article.categories[0]}
+                          </span>
+                        )}
+                      </div>
+                      
+                      <h3 className="text-xl font-bold mb-3 text-white line-clamp-2">{article.title}</h3>
+                      <p className="text-gray-300 mb-4 line-clamp-3 leading-relaxed">{article.contentSnippet}</p>
+                      
+                      {article.categories && article.categories.length > 1 && (
+                        <div className="flex flex-wrap gap-2 mb-4">
+                          {article.categories.slice(1).map((category: string, idx: number) => (
+                            <span key={idx} className="px-2 py-1 bg-[#6366f1]/5 text-[#6366f1] text-xs rounded border border-[#6366f1]/10">
+                              {category}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+                      
+                      <Button 
+                        asChild
+                        className="w-full bg-gradient-to-r from-[#6366f1] to-[#7c3aed] hover:from-[#7c3aed] hover:to-[#ec4899] text-white border-0 hover-lift"
+                      >
+                        <a href={article.link} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2">
+                          Read Article
+                          <ExternalLink size={16} />
+                        </a>
+                      </Button>
+                    </div>
+                  </div>
+                ))}
+              </div>
             )}
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-24 bg-gradient-to-b from-transparent to-[#0a0a0a]/50">
+      <section className="py-12 md:py-16 bg-gradient-to-b from-transparent to-[#0a0a0a]/50">
         <div className="container mx-auto px-4 md:px-6">
           <div className="max-w-4xl mx-auto text-center">
             <div className="scroll-trigger glass rounded-2xl p-12 border border-[#6366f1]/20">
-              <h2 className="text-3xl md:text-5xl font-bold mb-6 text-white">
-                Contribute to Our
-                <span className="gradient-text block">Blog</span>
+              <h2 className="text-3xl md:text-5xl font-bold mb-8 text-white">
+                Stay
+                <span className="gradient-text block">Informed</span>
               </h2>
               <p className="text-xl text-gray-300 mb-8 leading-relaxed">
-                Have insights to share? We welcome contributions from students, researchers, 
-                and industry professionals. Join our community of writers.
+                Never miss our latest insights and updates. Follow us on social media 
+                and subscribe to our newsletter for the most recent blockchain content.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button 
@@ -323,7 +347,7 @@ export default function ArticlesPage() {
                 >
                   <a href="https://medium.com/bsa-epfl" target="_blank" rel="noopener noreferrer">
                     <ExternalLink size={16} className="mr-2" />
-                    Visit Medium
+                    Visit Our Blog
                   </a>
                 </Button>
                 <Button 

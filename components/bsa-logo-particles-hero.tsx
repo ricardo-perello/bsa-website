@@ -280,10 +280,10 @@ export default function BSAHeroLogoParticles() {
   }, [isMobile])
 
   return (
-    <div className="relative w-full h-[90vh] flex flex-col items-center justify-center bg-gradient-to-br from-[#0a0a0a] via-[#1a1a1a] to-[#0a0a0a] overflow-hidden">
+    <div className="relative w-full h-[80vh] flex flex-col items-center justify-center bg-gradient-to-br from-[#0a0a0a] via-[#1a1a1a] to-[#0a0a0a] overflow-hidden pt-16">
       <canvas
         ref={canvasRef}
-        className="w-full h-[100vh] absolute top-[-5vh] left-0 touch-none"
+        className="w-full h-[90vh] absolute top-[-5vh] left-0 touch-none"
         aria-label="Interactive particle effect with BSA logo"
       />
 
@@ -297,7 +297,7 @@ export default function BSAHeroLogoParticles() {
 
       {/* Content Layout */}
       <div className="relative z-10 w-full max-w-7xl px-6 md:px-10 lg:px-0">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center h-[80vh]">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center h-[70vh]">
           {/* Text content on the left */}
           <div className="text-white">
             <div className="mb-6 flex justify-center lg:justify-start">

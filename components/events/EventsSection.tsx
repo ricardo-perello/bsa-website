@@ -8,7 +8,31 @@ import { LUMA_URL } from "@/lib/constants"
 
 export default function EventsSection() {
   const iframeRef = useRef<HTMLIFrameElement>(null)
-  const [iframeHeight, setIframeHeight] = useState(400)
+  const sidebarRef = useRef<HTMLDivElement>(null)
+  const [iframeHeight, setIframeHeight] = useState(450)
+
+  useEffect(() => {
+    const updateIframeHeight = () => {
+      if (sidebarRef.current) {
+        const sidebarHeight = sidebarRef.current.offsetHeight
+        // Subtract the padding (p-8 = 32px top + 32px bottom = 64px total)
+        const contentHeight = sidebarHeight - 64
+        setIframeHeight(Math.max(contentHeight, 450)) // Minimum height of 450px
+      }
+    }
+
+    // Update height on mount and window resize
+    updateIframeHeight()
+    window.addEventListener('resize', updateIframeHeight)
+    
+    // Also update after a short delay to ensure content is rendered
+    const timeoutId = setTimeout(updateIframeHeight, 100)
+
+    return () => {
+      window.removeEventListener('resize', updateIframeHeight)
+      clearTimeout(timeoutId)
+    }
+  }, [])
 
   useEffect(() => {
     const handleMessage = (event: MessageEvent) => {
@@ -17,7 +41,8 @@ export default function EventsSection() {
       try {
         const data = JSON.parse(event.data)
         if (data.type === 'setHeight' || data.type === 'resize') {
-          setIframeHeight(Math.max(400, data.value + 100))
+          // Don't override our calculated height
+          // setIframeHeight(450)
         }
       } catch (error) {
         console.error('Error parsing message:', error)
@@ -29,14 +54,14 @@ export default function EventsSection() {
   }, [])
 
   return (
-    <section id="events" className="py-24 md:py-32 bg-gradient-to-b from-[#0a0a0a]/50 to-transparent">
+    <section id="events" className="py-12 md:py-16 bg-gradient-to-b from-[#0a0a0a]/50 to-transparent">
       <div className="container mx-auto px-4 md:px-6">
-        <div className="scroll-trigger text-center mb-16">
+        <div className="scroll-trigger text-center mb-12">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#6366f1]/10 border border-[#6366f1]/20 rounded-full text-sm text-[#6366f1] mb-6">
             <Calendar size={16} />
             <span>Upcoming Events</span>
           </div>
-          <h2 className="text-3xl md:text-5xl font-bold mb-6 text-white">
+          <h2 className="text-3xl md:text-5xl font-bold mb-8 text-white">
             Join Our
             <span className="gradient-text block">Community Events</span>
           </h2>
@@ -48,22 +73,30 @@ export default function EventsSection() {
         <div className="flex gap-8 items-start">
           <div className="flex justify-left w-full md:w-2/3">
             <div className="w-full max-w-[900px] scroll-trigger" style={{ animationDelay: '0.2s' }}>
-              <div className="glass rounded-2xl p-6 border border-[#6366f1]/20 hover-lift">
-                <iframe
-                  ref={iframeRef}
-                  src="https://lu.ma/embed/calendar/cal-KuAvNkii7TFKkpK/events"
-                  className="w-full aspect-[14/5.8] rounded-xl"
-                  style={{ border: '1px solid rgba(99, 102, 241, 0.2)', borderRadius: '12px' }}
-                  allowFullScreen
-                  aria-hidden="false"
-                  tabIndex={0}
-                />
+              <div className="glass rounded-2xl p-8 border border-[#6366f1]/20 hover-lift">
+                <div className="flex justify-center w-full">
+                  <div className="w-full max-w-[1200px]">
+                    <iframe
+                      ref={iframeRef}
+                      src="https://lu.ma/embed/calendar/cal-KuAvNkii7TFKkpK/events"
+                      className="w-full rounded-xl"
+                      style={{ 
+                        height: `${iframeHeight}px`,
+                        border: '1px solid rgba(99, 102, 241, 0.2)', 
+                        borderRadius: '8px' 
+                      }}
+                      allowFullScreen
+                      aria-hidden="false"
+                      tabIndex={0}
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
           
           <div className="hidden md:block w-1/3 scroll-trigger" style={{ animationDelay: '0.4s' }}>
-            <div className="glass rounded-2xl p-8 border border-[#6366f1]/20 hover-lift">
+            <div ref={sidebarRef} className="glass rounded-2xl p-8 border border-[#6366f1]/20 hover-lift">
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-12 h-12 bg-gradient-to-r from-[#6366f1] to-[#7c3aed] rounded-xl flex items-center justify-center">
                   <Users size={24} className="text-white" />
