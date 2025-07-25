@@ -8,49 +8,53 @@ export async function GET() {
     const feed = await parser.parseURL('https://medium.com/feed/bsa-epfl')
     
     // Transform the feed items to match our component's expected format
-    const articles = await Promise.all(
-      feed.items?.slice(0, 6).map(async (item) => {
-        let thumbnail = null
-        
-        if (item.link) {
-          try {
-            // Fetch the article HTML
-            const response = await fetch(item.link, {
-              headers: {
-                'User-Agent': 'Mozilla/5.0 (compatible; BSA-Website/1.0)'
-              }
-            })
-            
-            if (response.ok) {
-              const html = await response.text()
-              const $ = cheerio.load(html)
-              
-              // Look for og:image meta tag
-              let img = $('meta[property="og:image"]').attr('content')
-              if (img) {
-                thumbnail = img
-              } else {
-                // Fallback to twitter:image
-                img = $('meta[name="twitter:image"]').attr('content')
-                if (img) {
-                  thumbnail = img
-                }
+    const articles = feed.items?.slice(0, 6).map((item) => {
+      let thumbnail = null
+      let categories: string[] = []
+      
+      // Extract categories from RSS feed
+      if (item.categories && Array.isArray(item.categories)) {
+        categories = item.categories
+      }
+      
+      // Extract thumbnail from content:encoded if available
+      if (item['content:encoded']) {
+        try {
+          const $ = cheerio.load(item['content:encoded'])
+          
+          // Look for the first image in the content
+          const firstImg = $('img').first()
+          if (firstImg.length > 0) {
+            const imgSrc = firstImg.attr('src')
+            if (imgSrc && imgSrc.includes('cdn-images-1.medium.com')) {
+              thumbnail = imgSrc
+            }
+          }
+          
+          // If no image found in content, try to extract from figure tags
+          if (!thumbnail) {
+            const figureImg = $('figure img').first()
+            if (figureImg.length > 0) {
+              const imgSrc = figureImg.attr('src')
+              if (imgSrc && imgSrc.includes('cdn-images-1.medium.com')) {
+                thumbnail = imgSrc
               }
             }
-          } catch (error) {
-            console.error('Error fetching article content for', item.title, ':', error)
           }
+        } catch (error) {
+          console.error('Error parsing content for thumbnail:', error)
         }
-        
-        return {
-          title: item.title,
-          link: item.link,
-          pubDate: item.pubDate,
-          contentSnippet: item.contentSnippet,
-          thumbnail: thumbnail
-        }
-      }) || []
-    )
+      }
+      
+      return {
+        title: item.title,
+        link: item.link,
+        pubDate: item.pubDate,
+        contentSnippet: item.contentSnippet,
+        thumbnail: thumbnail,
+        categories: categories
+      }
+    }) || []
 
     return NextResponse.json({ articles })
   } catch (error) {

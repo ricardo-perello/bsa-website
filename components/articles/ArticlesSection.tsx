@@ -74,6 +74,18 @@ export default function ArticlesSection() {
                     <p className="text-gray-600 mb-4 line-clamp-3">
                       {article.contentSnippet?.slice(0, 120)}{article.contentSnippet && article.contentSnippet.length > 120 ? "..." : ""}
                     </p>
+                    {article.categories && article.categories.length > 0 && (
+                      <div className="flex flex-wrap gap-1 mb-4">
+                        {article.categories.map((category: string, catIdx: number) => (
+                          <span
+                            key={catIdx}
+                            className="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full"
+                          >
+                            {category.charAt(0).toUpperCase() + category.slice(1)}
+                          </span>
+                        ))}
+                      </div>
+                    )}
                     <Button
                       asChild
                       variant="outline"
@@ -99,12 +111,20 @@ export default function ArticlesSection() {
                     </>
                   ) : (
                     <>
-                      View {articles.length - 3} More Articles <ChevronDown size={16} className="ml-2" />
+                      Show More <ChevronDown size={16} className="ml-2" />
                     </>
                   )}
                 </Button>
               </div>
             )}
+            
+            <div className="text-center mt-8">
+              <Button asChild className="bg-[#1f273a] hover:bg-[#2a3349]">
+                <Link href="/articles">
+                  View All Articles
+                </Link>
+              </Button>
+            </div>
           </>
         )}
       </div>

@@ -34,22 +34,25 @@ export default function ArticlesPage() {
     fetchArticles()
   }, [])
 
+  // Get all unique categories from articles
+  const allCategories = Array.from(
+    new Set(
+      articles.flatMap(article => article.categories || [])
+    )
+  ).sort()
+
   // Filter articles based on search term and category
   const filteredArticles = articles.filter(article => {
     const matchesSearch = article.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          article.contentSnippet?.toLowerCase().includes(searchTerm.toLowerCase())
     const matchesCategory = selectedCategory === "all" || 
-                           article.title.toLowerCase().includes(selectedCategory.toLowerCase())
+                           (article.categories && article.categories.includes(selectedCategory))
     return matchesSearch && matchesCategory
   })
 
   const categories = [
     { id: "all", name: "All Articles" },
-    { id: "defi", name: "DeFi" },
-    { id: "blockchain", name: "Blockchain" },
-    { id: "web3", name: "Web3" },
-    { id: "cryptocurrency", name: "Cryptocurrency" },
-    { id: "technology", name: "Technology" }
+    ...allCategories.map(cat => ({ id: cat, name: cat.charAt(0).toUpperCase() + cat.slice(1) }))
   ]
 
   return (
@@ -185,6 +188,18 @@ export default function ArticlesPage() {
                         <p className="text-gray-600 mb-4 line-clamp-3">
                           {article.contentSnippet?.slice(0, 150)}{article.contentSnippet && article.contentSnippet.length > 150 ? "..." : ""}
                         </p>
+                        {article.categories && article.categories.length > 0 && (
+                          <div className="flex flex-wrap gap-1 mb-4">
+                            {article.categories.map((category: string, catIdx: number) => (
+                              <span
+                                key={catIdx}
+                                className="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full"
+                              >
+                                {category.charAt(0).toUpperCase() + category.slice(1)}
+                              </span>
+                            ))}
+                          </div>
+                        )}
                         <Button
                           asChild
                           variant="outline"

@@ -16,7 +16,7 @@ export default function Navbar() {
           <div className="flex items-center">
             <Link href="/" className="flex items-center">
               {/* Temporary text replacement for the logo */}
-              <span className="text-2xl font-bold tracking-tight text-[#1f273a]">BSA</span>
+              <span className="text-2xl font-bold tracking-tight text-[#1f273a]">Blockchain Student Association EPFL</span>
             </Link>
           </div>
 
