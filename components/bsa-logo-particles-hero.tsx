@@ -2,6 +2,9 @@
 
 import { useRef, useEffect, useState } from "react"
 import { BSA_LOGO_PATH } from "./bsa-logo-path"
+import { Button } from "@/components/ui/button"
+import { ArrowRight, Sparkles, Zap, Users } from "lucide-react"
+import Link from "next/link"
 
 export default function BSAHeroLogoParticles() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -20,7 +23,7 @@ export default function BSAHeroLogoParticles() {
     const updateCanvasSize = () => {
       canvas.width = window.innerWidth
       canvas.height = window.innerHeight
-      setIsMobile(window.innerWidth < 768) // Set mobile breakpoint
+      setIsMobile(window.innerWidth < 768)
     }
 
     updateCanvasSize()
@@ -41,23 +44,21 @@ export default function BSAHeroLogoParticles() {
     function createTextImage() {
       if (!ctx || !canvas) return 0
 
-      ctx.fillStyle = "white"
+      ctx.fillStyle = "#6366f1"
       ctx.save()
 
-      // Increase logo size
-      const logoHeight = isMobile ? 300 : 500 // Reduced from 440/720
+      const logoHeight = isMobile ? 200 : 300
       const bsaLogoWidth = logoHeight * (135 / 151)
 
       // Position the logo on the right side of the canvas
       const xPosition = isMobile
-        ? canvas.width / 2 - bsaLogoWidth / 2 // Center on mobile
-        : canvas.width / 2
+        ? canvas.width / 2 - bsaLogoWidth / 2
+        : canvas.width * 0.7 // Move logo to the right side
 
-      const yPosition = canvas.height / 2 - logoHeight / 1.5
+      const yPosition = canvas.height / 2 - logoHeight / 2
 
       ctx.translate(xPosition, yPosition)
 
-      // Draw BSA logo
       const bsaScale = logoHeight / 151
       ctx.scale(bsaScale, bsaScale)
       const bsaPath = new Path2D(BSA_LOGO_PATH)
@@ -87,9 +88,9 @@ export default function BSAHeroLogoParticles() {
             y: y,
             baseX: x,
             baseY: y,
-            size: Math.random() * 1 + 0.5,
-            color: "white",
-            scatteredColor: "#7B68EE", // Changed from purple to dark blue/slate
+            size: Math.random() * 2 + 1,
+            color: "#6366f1",
+            scatteredColor: "#7c3aed",
             life: Math.random() * 100 + 50,
           }
         }
@@ -100,7 +101,7 @@ export default function BSAHeroLogoParticles() {
 
     function createInitialParticles(scale: number) {
       if (!canvas) return
-      const baseParticleCount = 7000 // Increased base count for higher density
+      const baseParticleCount = 8000
       const particleCount = Math.floor(baseParticleCount * Math.sqrt((canvas.width * canvas.height) / (1920 * 1080)))
       for (let i = 0; i < particleCount; i++) {
         const particle = createParticle(scale)
@@ -113,13 +114,18 @@ export default function BSAHeroLogoParticles() {
     function animate(scale: number) {
       if (!ctx || !canvas) return
       ctx.clearRect(0, 0, canvas.width, canvas.height)
-      ctx.fillStyle = "black"
+      
+      // Create gradient background
+      const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height)
+      gradient.addColorStop(0, '#0a0a0a')
+      gradient.addColorStop(1, '#1a1a1a')
+      ctx.fillStyle = gradient
       ctx.fillRect(0, 0, canvas.width, canvas.height)
 
       const { x: mouseX, y: mouseY } = mousePositionRef.current
       const maxDistance = 160
 
-      // Update and draw waves
+      // Update and draw waves with enhanced colors
       for (let i = wavesRef.current.length - 1; i >= 0; i--) {
         const wave = wavesRef.current[i]
         wave.radius += 5
@@ -132,7 +138,7 @@ export default function BSAHeroLogoParticles() {
 
         ctx.beginPath()
         ctx.arc(wave.x, wave.y, wave.radius, 0, Math.PI * 2)
-        ctx.strokeStyle = `rgba(123, 104, 238, ${wave.strength * 0.8})`
+        ctx.strokeStyle = `rgba(99, 102, 241, ${wave.strength * 0.8})`
         ctx.lineWidth = 4
         ctx.stroke()
       }
@@ -172,8 +178,12 @@ export default function BSAHeroLogoParticles() {
         p.x = p.baseX - totalMoveX
         p.y = p.baseY - totalMoveY
 
-        ctx.fillStyle = "white"
+        // Enhanced particle rendering with glow effect
+        ctx.shadowColor = p.color
+        ctx.shadowBlur = 4
+        ctx.fillStyle = p.color
         ctx.fillRect(p.x, p.y, p.size, p.size)
+        ctx.shadowBlur = 0
 
         p.life--
         if (p.life <= 0) {
@@ -187,7 +197,7 @@ export default function BSAHeroLogoParticles() {
         }
       }
 
-      const baseParticleCount = 7000
+      const baseParticleCount = 8000
       const targetParticleCount = Math.floor(
         baseParticleCount * Math.sqrt((canvas.width * canvas.height) / (1920 * 1080)),
       )
@@ -270,39 +280,85 @@ export default function BSAHeroLogoParticles() {
   }, [isMobile])
 
   return (
-    <div className="relative w-full h-[80vh] flex flex-col items-center justify-center bg-black overflow-hidden">
+    <div className="relative w-full h-[90vh] flex flex-col items-center justify-center bg-gradient-to-br from-[#0a0a0a] via-[#1a1a1a] to-[#0a0a0a] overflow-hidden">
       <canvas
         ref={canvasRef}
-        className="w-full h-[100vh] absolute top-[-10vh] left-0 touch-none"
+        className="w-full h-[100vh] absolute top-[-5vh] left-0 touch-none"
         aria-label="Interactive particle effect with BSA logo"
       />
 
-      {/* Text content on the left */}
-      <div
-        className="absolute z-10 text-white max-w-md px-6 md:px-10 lg:px-0 
-                     md:left-[10%] lg:left-[15%] 
-                     text-center md:text-left"
-      >
-        <h1
-          className="text-3xl md:text-4xl lg:text-5xl font-extrabold mb-4 
-                       tracking-tight bg-clip-text text-transparent 
-                       bg-gradient-to-r from-white to-[#7B68EE]
-                       font-sans"
-        >
-          Blockchain Student Association
-        </h1>
-        <p className="text-lg md:text-xl text-gray-300 leading-relaxed">
-          Bridging academia and industry to empower the next generation of blockchain innovators. Explore, learn, and
-          build the decentralized future.
-        </p>
-        <button
-          className="mt-8 px-6 py-3 bg-[#1f273a] hover:bg-[#2a3349] text-white 
-                         rounded-lg font-medium transition-colors duration-300 
-                         shadow-lg shadow-[#1f273a]/20"
-          onClick={() => window.location.href = '/join'}
-        >
-          Join the Community
-        </button>
+      {/* Animated background elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute top-20 left-20 w-2 h-2 bg-[#6366f1] rounded-full animate-pulse-glow opacity-60"></div>
+        <div className="absolute top-40 right-32 w-1 h-1 bg-[#7c3aed] rounded-full animate-float opacity-40"></div>
+        <div className="absolute bottom-32 left-1/4 w-1.5 h-1.5 bg-[#ec4899] rounded-full animate-pulse-glow opacity-50"></div>
+        <div className="absolute top-1/2 right-20 w-1 h-1 bg-[#6366f1] rounded-full animate-float opacity-30"></div>
+      </div>
+
+      {/* Content Layout */}
+      <div className="relative z-10 w-full max-w-7xl px-6 md:px-10 lg:px-0">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center h-[80vh]">
+          {/* Text content on the left */}
+          <div className="text-white">
+            <div className="mb-6 flex justify-center lg:justify-start">
+              <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#6366f1]/10 border border-[#6366f1]/20 rounded-full text-sm text-[#6366f1] animate-fade-in">
+                <Sparkles size={16} />
+                <span>Building the Future of Web3</span>
+              </div>
+            </div>
+            
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold mb-6 tracking-tight animate-slide-up text-center lg:text-left">
+              <span className="gradient-text">Blockchain</span>
+              <br />
+              <span className="text-white">Student Association</span>
+            </h1>
+            
+            <p className="text-lg md:text-xl text-gray-300 leading-relaxed max-w-2xl mx-auto lg:mx-0 mb-8 animate-slide-up text-center lg:text-left" style={{ animationDelay: '0.2s' }}>
+              Empowering the next generation of blockchain innovators through education, 
+              collaboration, and hands-on experience. Join our community of builders, 
+              thinkers, and creators.
+            </p>
+            
+            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center animate-slide-up" style={{ animationDelay: '0.4s' }}>
+              <Button asChild size="lg" className="bg-gradient-to-r from-[#6366f1] to-[#7c3aed] hover:from-[#7c3aed] hover:to-[#ec4899] text-white border-0 px-8 py-3 text-lg font-semibold hover-lift">
+                <Link href="/join" className="flex items-center gap-2">
+                  Join the Community
+                  <ArrowRight size={20} />
+                </Link>
+              </Button>
+              
+              <Button asChild variant="outline" size="lg" className="border-[#6366f1] text-[#6366f1] hover:bg-[#6366f1] hover:text-white px-8 py-3 text-lg font-semibold hover-lift">
+                <Link href="/events" className="flex items-center gap-2">
+                  <Users size={20} />
+                  Explore Events
+                </Link>
+              </Button>
+            </div>
+            
+            {/* Stats */}
+            <div className="flex flex-wrap justify-center lg:justify-start gap-8 mt-12 animate-slide-up" style={{ animationDelay: '0.6s' }}>
+              <div className="text-center lg:text-left">
+                <div className="text-2xl md:text-3xl font-bold gradient-text">500+</div>
+                <div className="text-gray-400 text-sm">Active Members</div>
+              </div>
+              <div className="text-center lg:text-left">
+                <div className="text-2xl md:text-3xl font-bold gradient-text">50+</div>
+                <div className="text-gray-400 text-sm">Events Hosted</div>
+              </div>
+              <div className="text-center lg:text-left">
+                <div className="text-2xl md:text-3xl font-bold gradient-text">20+</div>
+                <div className="text-gray-400 text-sm">Startups Launched</div>
+              </div>
+            </div>
+          </div>
+
+          {/* Logo area on the right */}
+          <div className="hidden lg:flex items-center justify-center">
+            <div className="relative w-96 h-96">
+              {/* This area will be filled by the canvas particles */}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   )

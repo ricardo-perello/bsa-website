@@ -46,16 +46,29 @@ export async function GET() {
         }
       }
       
+      // Create contentSnippet from content if not available
+      let contentSnippet = item.contentSnippet
+      if (!contentSnippet && item['content:encoded']) {
+        try {
+          const $ = cheerio.load(item['content:encoded'])
+          contentSnippet = $.text().substring(0, 200) + '...'
+        } catch (error) {
+          console.error('Error extracting content snippet:', error)
+          contentSnippet = "Read our latest insights on blockchain technology and Web3 development."
+        }
+      }
+      
       return {
-        title: item.title,
-        link: item.link,
-        pubDate: item.pubDate,
-        contentSnippet: item.contentSnippet,
+        title: item.title || "BSA Article",
+        link: item.link || "https://medium.com/bsa-epfl",
+        pubDate: item.pubDate || new Date().toISOString(),
+        contentSnippet: contentSnippet || "Read our latest insights on blockchain technology and Web3 development.",
         thumbnail: thumbnail,
         categories: categories
       }
     }) || []
 
+    console.log('Processed articles:', articles) // Debug log
     return NextResponse.json({ articles })
   } catch (error) {
     console.error('Error fetching Medium RSS feed:', error)
