@@ -47,7 +47,10 @@ export default function HeroSection() {
             Connecting students with blockchain technology, innovation, and industry opportunities
           </p>
           <div className="flex flex-wrap gap-4">
-            <button className="px-6 py-3 bg-white text-[#1f273a] font-medium rounded-lg hover:bg-white/90 transition-colors">
+            <button 
+              className="px-6 py-3 bg-white text-[#1f273a] font-medium rounded-lg hover:bg-white/90 transition-colors"
+              onClick={() => window.location.href = '/join'}
+            >
               Join BSA
             </button>
             <button className="px-6 py-3 bg-transparent border border-white text-white font-medium rounded-lg hover:bg-white/10 transition-colors">

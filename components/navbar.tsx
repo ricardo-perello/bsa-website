@@ -41,7 +41,7 @@ export default function Navbar() {
               Contact
             </Link>
             <Button asChild className="bg-[#1f273a] hover:bg-[#2a3349]">
-              <Link href="/#join">Join Us</Link>
+              <Link href="/join">Join Us</Link>
             </Button>
           </nav>
 
@@ -106,7 +106,7 @@ export default function Navbar() {
             </Link>
             <div className="px-3 py-2">
               <Button asChild className="w-full bg-[#1f273a] hover:bg-[#2a3349]">
-                <Link href="/#join" onClick={() => setIsMenuOpen(false)}>
+                <Link href="/join" onClick={() => setIsMenuOpen(false)}>
                   Join Us
                 </Link>
               </Button>

@@ -146,7 +146,7 @@ export default function Home() {
             networking opportunities.
           </p>
           <Button asChild size="lg" className="bg-white text-[#1f273a] hover:bg-gray-200">
-            <Link href="/join">Become a Member</Link>
+            <Link href="/join">Join Us</Link>
           </Button>
         </div>
       </section>

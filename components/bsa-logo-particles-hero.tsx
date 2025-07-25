@@ -299,6 +299,7 @@ export default function BSAHeroLogoParticles() {
           className="mt-8 px-6 py-3 bg-[#1f273a] hover:bg-[#2a3349] text-white 
                          rounded-lg font-medium transition-colors duration-300 
                          shadow-lg shadow-[#1f273a]/20"
+          onClick={() => window.location.href = '/join'}
         >
           Join the Community
         </button>
