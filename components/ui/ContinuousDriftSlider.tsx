@@ -27,13 +27,23 @@ export default function ContinuousDriftSlider({
   const scrollTimeout = useRef<NodeJS.Timeout | undefined>(undefined)
 
   useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY
+    const handleWheel = (e: WheelEvent) => {
       const currentTime = Date.now()
       const timeDiff = currentTime - lastScrollTime.current
       
       if (timeDiff > 0) {
-        const scrollVelocity = (currentScrollY - lastScrollY.current) / timeDiff
+        // Check for horizontal scroll (deltaX) first, then vertical scroll (deltaY)
+        let scrollVelocity = 0
+        
+        if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
+          // Horizontal scroll detected
+          scrollVelocity = e.deltaX / timeDiff
+        } else {
+          // Vertical scroll detected
+          const currentScrollY = window.scrollY
+          scrollVelocity = (currentScrollY - lastScrollY.current) / timeDiff
+          lastScrollY.current = currentScrollY
+        }
         
         // Determine direction based on scroll velocity
         if (Math.abs(scrollVelocity) > 0.01) {
@@ -52,7 +62,6 @@ export default function ContinuousDriftSlider({
         })
       }
       
-      lastScrollY.current = currentScrollY
       lastScrollTime.current = currentTime
       
       // Clear existing timeout
@@ -90,11 +99,11 @@ export default function ContinuousDriftSlider({
       animationRef.current = requestAnimationFrame(animate)
     }
 
-    window.addEventListener('scroll', handleScroll, { passive: true })
+    window.addEventListener('wheel', handleWheel, { passive: true })
     animationRef.current = requestAnimationFrame(animate)
 
     return () => {
-      window.removeEventListener('scroll', handleScroll)
+      window.removeEventListener('wheel', handleWheel)
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current)
       }

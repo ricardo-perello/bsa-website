@@ -32,7 +32,7 @@ export default function StartupsSection() {
 
         {/* Desktop View: Continuous drift slider */}
         <div className="hidden md:block scroll-trigger" style={{ animationDelay: '0.2s' }}>
-          <ContinuousDriftSlider content={startups} baseSpeed={0.8} maxSpeed={4} acceleration={0.05} />
+          <ContinuousDriftSlider content={startups} baseSpeed={0.5} maxSpeed={3} acceleration={0.03} />
         </div>
         
         {/* CTA Section */}
