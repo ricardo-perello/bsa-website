@@ -192,7 +192,7 @@ export default function EventsSection() {
             <div className="w-full max-w-[900px]">
               <iframe
                 ref={iframeRef}
-                src="https://lu.ma/embed/calendar/cal-6mYbk8qJrIPIXhD/events"
+                src="https://lu.ma/embed/calendar/cal-KuAvNkii7TFKkpK/events"
                 className="w-full aspect-[14/5.8]"
                 style={{ border: '1px solid #bfcbda88', borderRadius: '4px' }}
                 allowFullScreen

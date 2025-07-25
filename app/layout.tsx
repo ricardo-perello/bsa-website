@@ -1,14 +1,21 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { Space_Grotesk } from "next/font/google"
+import { Roboto, Noto_Serif } from "next/font/google"
 import { ThemeProvider } from "@/components/theme-provider"
 import "./globals.css"
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
 
-const spaceGrotesk = Space_Grotesk({
+const roboto = Roboto({
+  weight: ['300', '700'],
   subsets: ["latin"],
   variable: "--font-sans",
+})
+
+const notoSerif = Noto_Serif({
+  weight: ['700'],
+  subsets: ["latin"],
+  variable: "--font-serif",
 })
 
 export const metadata: Metadata = {
@@ -28,7 +35,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${spaceGrotesk.variable} font-sans antialiased`}>
+      <body className={`${roboto.variable} ${notoSerif.variable} font-sans antialiased`}>
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
           <Navbar />
           {children}

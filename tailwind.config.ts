@@ -11,6 +11,15 @@ const config: Config = {
   theme: {
   	extend: {
   		colors: {
+  			// Brand Colors
+  			'bsa-primary': 'var(--color-primary)',
+  			'bsa-white': 'var(--color-white)',
+  			'bsa-pink': 'var(--color-pink)',
+  			'bsa-green': 'var(--color-green)',
+  			'bsa-orange': 'var(--color-orange)',
+  			'bsa-light-blue': 'var(--color-light-blue)',
+  			
+  			// Theme Colors
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {
@@ -66,6 +75,10 @@ const config: Config = {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
   			sm: 'calc(var(--radius) - 4px)'
+  		},
+  		fontFamily: {
+  			sans: ['var(--font-sans)'],
+  			serif: ['var(--font-serif)'],
   		},
   		keyframes: {
   			'accordion-down': {
