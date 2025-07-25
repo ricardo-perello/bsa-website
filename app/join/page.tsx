@@ -24,7 +24,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { CheckCircle, ArrowRight, Users, Calendar, BookOpen, Code } from "lucide-react"
+import { CheckCircle, ArrowRight, Users, Calendar, BookOpen, Code, UserPlus } from "lucide-react"
 
 const joinFormSchema = z.object({
   firstName: z.string().min(2, "First name must be at least 2 characters"),
@@ -159,52 +159,54 @@ export default function JoinPage() {
 
   if (isSubmitted) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-[#1f273a] to-[#2d3748] text-white">
-        <div className="container mx-auto px-4 md:px-6 py-20">
+      <div className="min-h-screen bg-gradient-to-b from-[#0a0a0a] to-[#1a1a1a] text-white">
+        <div className="container mx-auto px-4 md:px-6 py-24">
           <div className="max-w-2xl mx-auto text-center">
-            <div className="mb-8">
-              <CheckCircle className="w-20 h-20 text-green-400 mx-auto mb-4" />
-              <h1 className="text-4xl md:text-5xl font-bold mb-4">Welcome to BSA!</h1>
-              <p className="text-xl text-gray-200 mb-8">
-                Thank you for your interest in joining the Blockchain Student Association. 
-                We've received your application and will be in touch soon!
-              </p>
-            </div>
-            
-            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-8 mb-8">
-              <h2 className="text-2xl font-semibold mb-4">What's Next?</h2>
-              <div className="space-y-4 text-left">
-                <div className="flex items-start gap-3">
-                  <Calendar className="w-5 h-5 text-blue-400 mt-1 flex-shrink-0" />
-                  <div>
-                    <h3 className="font-semibold">Welcome Email</h3>
-                    <p className="text-gray-300">You'll receive a welcome email within 24 hours</p>
+            <div className="glass rounded-2xl p-12 border border-[#6366f1]/20">
+              <div className="mb-8">
+                <CheckCircle className="w-20 h-20 text-green-400 mx-auto mb-4" />
+                <h1 className="text-4xl md:text-5xl font-bold mb-4 text-white">Welcome to BSA!</h1>
+                <p className="text-xl text-gray-300 mb-8 leading-relaxed">
+                  Thank you for your interest in joining the Blockchain Student Association. 
+                  We've received your application and will be in touch soon!
+                </p>
+              </div>
+              
+              <div className="glass rounded-2xl p-8 mb-8 border border-[#6366f1]/20">
+                <h2 className="text-2xl font-semibold mb-4 text-white">What's Next?</h2>
+                <div className="space-y-4 text-left">
+                  <div className="flex items-start gap-3">
+                    <Calendar className="w-5 h-5 text-[#6366f1] mt-1 flex-shrink-0" />
+                    <div>
+                      <h3 className="font-semibold text-white">Welcome Email</h3>
+                      <p className="text-gray-300">You'll receive a welcome email within 24 hours</p>
+                    </div>
                   </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <Users className="w-5 h-5 text-green-400 mt-1 flex-shrink-0" />
-                  <div>
-                    <h3 className="font-semibold">Community Access</h3>
-                    <p className="text-gray-300">Get access to our Discord server and event notifications</p>
+                  <div className="flex items-start gap-3">
+                    <Users className="w-5 h-5 text-[#6366f1] mt-1 flex-shrink-0" />
+                    <div>
+                      <h3 className="font-semibold text-white">Community Access</h3>
+                      <p className="text-gray-300">Get access to our Discord server and event notifications</p>
+                    </div>
                   </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <BookOpen className="w-5 h-5 text-purple-400 mt-1 flex-shrink-0" />
-                  <div>
-                    <h3 className="font-semibold">Upcoming Events</h3>
-                    <p className="text-gray-300">Stay tuned for our next workshops and meetups</p>
+                  <div className="flex items-start gap-3">
+                    <BookOpen className="w-5 h-5 text-[#6366f1] mt-1 flex-shrink-0" />
+                    <div>
+                      <h3 className="font-semibold text-white">Upcoming Events</h3>
+                      <p className="text-gray-300">Stay tuned for our next workshops and meetups</p>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-            
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button asChild className="bg-white text-[#1f273a] hover:bg-gray-100">
-                <a href="/events">View Upcoming Events</a>
-              </Button>
-              <Button asChild variant="outline" className="border-white text-white hover:bg-white hover:text-[#1f273a]">
-                <a href="/">Back to Home</a>
-              </Button>
+              
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Button asChild className="bg-gradient-to-r from-[#6366f1] to-[#7c3aed] hover:from-[#7c3aed] hover:to-[#ec4899] text-white border-0 hover-lift">
+                  <a href="/events">View Upcoming Events</a>
+                </Button>
+                <Button asChild variant="outline" className="border-[#6366f1] text-[#6366f1] hover:bg-[#6366f1] hover:text-white hover-lift">
+                  <a href="/">Back to Home</a>
+                </Button>
+              </div>
             </div>
           </div>
         </div>
@@ -213,33 +215,38 @@ export default function JoinPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#1f273a] to-[#2d3748] text-white">
+    <div className="min-h-screen bg-gradient-to-b from-[#0a0a0a] to-[#1a1a1a] text-white">
       {/* Hero Section */}
-      <section className="py-20">
+      <section className="py-24 md:py-32 bg-gradient-to-b from-[#0a0a0a]/50 to-transparent">
         <div className="container mx-auto px-4 md:px-6">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">
-              Join the BSA Community
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#6366f1]/10 border border-[#6366f1]/20 rounded-full text-sm text-[#6366f1] mb-6">
+              <UserPlus size={16} />
+              <span>Join Us</span>
+            </div>
+            <h1 className="text-4xl md:text-6xl font-bold mb-6 text-white">
+              Join the BSA
+              <span className="gradient-text block">Community</span>
             </h1>
-            <p className="text-xl md:text-2xl text-gray-200 mb-8">
+            <p className="text-xl md:text-2xl text-gray-300 mb-8 leading-relaxed">
               Become part of EPFL's premier blockchain community. Connect, learn, and build the future with us.
             </p>
             
             {/* Benefits Cards */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6">
-                <Code className="w-8 h-8 text-blue-400 mx-auto mb-3" />
-                <h3 className="text-lg font-semibold mb-2">Hands-on Learning</h3>
+              <div className="glass rounded-2xl p-6 border border-[#6366f1]/20 hover-lift">
+                <Code className="w-8 h-8 text-[#6366f1] mx-auto mb-3" />
+                <h3 className="text-lg font-semibold mb-2 text-white">Hands-on Learning</h3>
                 <p className="text-gray-300">Access to workshops, hackathons, and real-world projects</p>
               </div>
-              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6">
-                <Users className="w-8 h-8 text-green-400 mx-auto mb-3" />
-                <h3 className="text-lg font-semibold mb-2">Network & Connect</h3>
+              <div className="glass rounded-2xl p-6 border border-[#6366f1]/20 hover-lift">
+                <Users className="w-8 h-8 text-[#6366f1] mx-auto mb-3" />
+                <h3 className="text-lg font-semibold mb-2 text-white">Network & Connect</h3>
                 <p className="text-gray-300">Meet industry professionals and like-minded students</p>
               </div>
-              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6">
-                <BookOpen className="w-8 h-8 text-purple-400 mx-auto mb-3" />
-                <h3 className="text-lg font-semibold mb-2">Stay Updated</h3>
+              <div className="glass rounded-2xl p-6 border border-[#6366f1]/20 hover-lift">
+                <BookOpen className="w-8 h-8 text-[#6366f1] mx-auto mb-3" />
+                <h3 className="text-lg font-semibold mb-2 text-white">Stay Updated</h3>
                 <p className="text-gray-300">Get the latest insights and opportunities in blockchain</p>
               </div>
             </div>
@@ -248,10 +255,10 @@ export default function JoinPage() {
       </section>
 
       {/* Form Section */}
-      <section className="py-16">
+      <section className="py-24 bg-gradient-to-b from-transparent to-[#0a0a0a]/50">
         <div className="container mx-auto px-4 md:px-6">
           <div className="max-w-3xl mx-auto">
-            <Card className="bg-white/10 backdrop-blur-sm border-white/20">
+            <Card className="glass border-[#6366f1]/20">
               <CardHeader>
                 <CardTitle className="text-2xl text-white">Application Form</CardTitle>
                 <CardDescription className="text-gray-300">
@@ -270,7 +277,11 @@ export default function JoinPage() {
                           <FormItem>
                             <FormLabel className="text-white">First Name *</FormLabel>
                             <FormControl>
-                              <Input placeholder="Enter your first name" {...field} />
+                              <Input 
+                                placeholder="Enter your first name" 
+                                {...field} 
+                                className="bg-[#1a1a1a] border-[#6366f1]/20 text-white placeholder-gray-400 focus:border-[#6366f1]"
+                              />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -283,7 +294,11 @@ export default function JoinPage() {
                           <FormItem>
                             <FormLabel className="text-white">Last Name *</FormLabel>
                             <FormControl>
-                              <Input placeholder="Enter your last name" {...field} />
+                              <Input 
+                                placeholder="Enter your last name" 
+                                {...field} 
+                                className="bg-[#1a1a1a] border-[#6366f1]/20 text-white placeholder-gray-400 focus:border-[#6366f1]"
+                              />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -298,7 +313,12 @@ export default function JoinPage() {
                         <FormItem>
                           <FormLabel className="text-white">Email Address *</FormLabel>
                           <FormControl>
-                            <Input type="email" placeholder="your.email@epfl.ch" {...field} />
+                            <Input 
+                              type="email" 
+                              placeholder="your.email@epfl.ch" 
+                              {...field} 
+                              className="bg-[#1a1a1a] border-[#6366f1]/20 text-white placeholder-gray-400 focus:border-[#6366f1]"
+                            />
                           </FormControl>
                           <FormDescription className="text-gray-300">
                             We'll use this to send you updates and event notifications
@@ -315,7 +335,11 @@ export default function JoinPage() {
                         <FormItem>
                           <FormLabel className="text-white">Student ID (Optional)</FormLabel>
                           <FormControl>
-                            <Input placeholder="e.g., 123456" {...field} />
+                            <Input 
+                              placeholder="e.g., 123456" 
+                              {...field} 
+                              className="bg-[#1a1a1a] border-[#6366f1]/20 text-white placeholder-gray-400 focus:border-[#6366f1]"
+                            />
                           </FormControl>
                           <FormDescription className="text-gray-300">
                             Help us verify your EPFL student status
@@ -335,11 +359,11 @@ export default function JoinPage() {
                             <FormLabel className="text-white">Study Program *</FormLabel>
                             <Select onValueChange={field.onChange} defaultValue={field.value}>
                               <FormControl>
-                                <SelectTrigger>
+                                <SelectTrigger className="bg-[#1a1a1a] border-[#6366f1]/20 text-white focus:border-[#6366f1]">
                                   <SelectValue placeholder="Select your program" />
                                 </SelectTrigger>
                               </FormControl>
-                              <SelectContent>
+                              <SelectContent className="bg-[#1a1a1a] border-[#6366f1]/20">
                                 {studyPrograms.map((program) => (
                                   <SelectItem key={program} value={program}>
                                     {program}
@@ -360,11 +384,11 @@ export default function JoinPage() {
                             <FormLabel className="text-white">Year of Study *</FormLabel>
                             <Select onValueChange={field.onChange} defaultValue={field.value}>
                               <FormControl>
-                                <SelectTrigger>
+                                <SelectTrigger className="bg-[#1a1a1a] border-[#6366f1]/20 text-white focus:border-[#6366f1]">
                                   <SelectValue placeholder="Select your year" />
                                 </SelectTrigger>
                               </FormControl>
-                              <SelectContent>
+                              <SelectContent className="bg-[#1a1a1a] border-[#6366f1]/20">
                                 {yearsOfStudy.map((year) => (
                                   <SelectItem key={year} value={year}>
                                     {year}
@@ -404,9 +428,9 @@ export default function JoinPage() {
                                       field.onChange(currentValues.filter((v) => v !== value))
                                     }
                                   }}
-                                  className="rounded border-gray-300 text-[#1f273a] focus:ring-[#1f273a]"
+                                  className="rounded border-[#6366f1]/20 text-[#6366f1] focus:ring-[#6366f1] bg-[#1a1a1a]"
                                 />
-                                <span className="text-sm text-gray-200">{interest}</span>
+                                <span className="text-sm text-gray-300">{interest}</span>
                               </label>
                             ))}
                           </div>
@@ -424,11 +448,11 @@ export default function JoinPage() {
                           <FormLabel className="text-white">Blockchain Experience *</FormLabel>
                           <Select onValueChange={field.onChange} defaultValue={field.value}>
                             <FormControl>
-                              <SelectTrigger>
+                              <SelectTrigger className="bg-[#1a1a1a] border-[#6366f1]/20 text-white focus:border-[#6366f1]">
                                 <SelectValue placeholder="Select your experience level" />
                               </SelectTrigger>
                             </FormControl>
-                            <SelectContent>
+                            <SelectContent className="bg-[#1a1a1a] border-[#6366f1]/20">
                               {experienceLevels.map((level) => (
                                 <SelectItem key={level} value={level}>
                                   {level}
@@ -454,7 +478,7 @@ export default function JoinPage() {
                           <FormControl>
                             <Textarea
                               placeholder="Tell us about your interest in blockchain and what you hope to gain from joining BSA..."
-                              className="min-h-[120px]"
+                              className="min-h-[120px] bg-[#1a1a1a] border-[#6366f1]/20 text-white placeholder-gray-400 focus:border-[#6366f1]"
                               {...field}
                             />
                           </FormControl>
@@ -475,11 +499,11 @@ export default function JoinPage() {
                           <FormLabel className="text-white">How did you hear about BSA? *</FormLabel>
                           <Select onValueChange={field.onChange} defaultValue={field.value}>
                             <FormControl>
-                              <SelectTrigger>
+                              <SelectTrigger className="bg-[#1a1a1a] border-[#6366f1]/20 text-white focus:border-[#6366f1]">
                                 <SelectValue placeholder="Select an option" />
                               </SelectTrigger>
                             </FormControl>
-                            <SelectContent>
+                            <SelectContent className="bg-[#1a1a1a] border-[#6366f1]/20">
                               {howDidYouHear.map((option) => (
                                 <SelectItem key={option} value={option}>
                                   {option}
@@ -502,7 +526,7 @@ export default function JoinPage() {
                           <FormControl>
                             <Textarea
                               placeholder="Any additional information you'd like to share..."
-                              className="min-h-[100px]"
+                              className="min-h-[100px] bg-[#1a1a1a] border-[#6366f1]/20 text-white placeholder-gray-400 focus:border-[#6366f1]"
                               {...field}
                             />
                           </FormControl>
@@ -519,7 +543,7 @@ export default function JoinPage() {
                       <Button
                         type="submit"
                         disabled={isSubmitting}
-                        className="w-full bg-white text-[#1f273a] hover:bg-gray-100 font-semibold py-3"
+                        className="w-full bg-gradient-to-r from-[#6366f1] to-[#7c3aed] hover:from-[#7c3aed] hover:to-[#ec4899] text-white border-0 hover-lift font-semibold py-3"
                       >
                         {isSubmitting ? (
                           "Submitting..."
