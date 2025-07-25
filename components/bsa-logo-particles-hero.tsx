@@ -47,13 +47,13 @@ export default function BSAHeroLogoParticles() {
       ctx.fillStyle = "#6366f1"
       ctx.save()
 
-      const logoHeight = isMobile ? 200 : 300
+      const logoHeight = isMobile ? 200 : 350
       const bsaLogoWidth = logoHeight * (135 / 151)
 
       // Position the logo on the right side of the canvas
       const xPosition = isMobile
         ? canvas.width / 2 - bsaLogoWidth / 2
-        : canvas.width * 0.7 // Move logo to the right side
+        : canvas.width * 0.6 // Move logo more to the left
 
       const yPosition = canvas.height / 2 - logoHeight / 2
 
