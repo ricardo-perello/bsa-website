@@ -35,77 +35,81 @@ export default function EventsPage() {
   // Sample event data - you can replace this with real data
   const pastEvents = [
     {
-      id: 4,
-      title: "Web3 Development Bootcamp",
-      date: "2025-07-10",
-      time: "10:00 - 16:00",
-      location: "EPFL, Room BC 410",
-      description: "Intensive bootcamp covering Solidity, smart contract development, and DApp deployment on Ethereum.",
-      attendees: 35,
-      type: "Bootcamp",
+      id: 1,
+      title: "EPFL BSA Conference - Privacy x Verifiability",
+      date: "2025-03-07",
+      time: "9:30 - 18:00 CET",
+      location: "BC Building (building of the IC faculty), EPFL, Ecublens",
+      description: "Deep dive into the latest in blockchain privacy and verifiability with cutting-edge talks, panel discussions, and networking opportunities.",
+      attendees: 363,
+      type: "Conference",
       registrationUrl: null,
-      detailedDescription: "Our comprehensive Web3 Development Bootcamp was a resounding success! Over 35 participants from various backgrounds came together to dive deep into blockchain development. The bootcamp covered essential topics including Solidity smart contract development, DApp architecture, and deployment strategies on the Ethereum network. Participants worked on real-world projects and gained hands-on experience with industry-standard tools and frameworks. The event featured guest speakers from leading blockchain companies and concluded with a hackathon where teams built and presented their own decentralized applications.",
+      detailedDescription: "The EPFL BSA Conference - Privacy x Verifiability was a groundbreaking event that brought together leading minds in blockchain technology to explore the critical intersection of privacy and verifiability. Organized by EPFL students in the BC building, this conference offered cutting-edge talks, panel discussions, and plenty of opportunities to network with fellow enthusiasts. The event featured exciting talks with some of the best minds in the space discussing Privacy-Preserving Payments, Data Security & Confidentiality, Private DeFi, MEV, Secure Hardware, Privacy infrastructure (ZKP, MPC, TEE), Scalability infrastructure, and AI & Privacy. Whether participants were seasoned experts or just curious about data confidentiality, digital privacy, or blockchain scalability, they found valuable insights and a vibrant community ready to share ideas. The conference included breakfast at the beginning, networking lunch at midday, and snacks and refreshments in the afternoon, all provided by our sponsors: The Hashgraph Association, Aleph Zero, Common Finance, Mina Foundation, and Taurus. This event was organized in collaboration with Privacy Guardians (PG), the CVA, and IEE Blockchain, establishing strong connections between communities and leading protocols in the privacy space.",
       photos: [
-        "/placeholder.jpg?height=400&width=600",
-        "/placeholder.jpg?height=400&width=600", 
-        "/placeholder.jpg?height=400&width=600"
+        "/bsa_events/IMG_0492.JPG",
+        "/bsa_events/IMG_0578.JPG", 
+        "/bsa_events/IMG_3494.JPG"
       ],
       highlights: [
-        "35 participants from diverse backgrounds",
-        "Hands-on Solidity development",
-        "Real-world project implementation",
-        "Guest speakers from industry leaders",
-        "Final hackathon with live demos"
+        "363 attendees from diverse backgrounds",
+        "Cutting-edge talks on privacy and verifiability",
+        "Panel discussions with industry leaders",
+        "Networking with leading protocols and companies",
+        "Sponsored by major blockchain organizations",
+        "Collaboration with Privacy Guardians and IEE Blockchain"
       ]
     },
     {
-      id: 5,
-      title: "Blockchain Research Symposium",
-      date: "2025-06-25",
-      time: "13:00 - 17:00",
-      location: "EPFL, Auditorium",
-      description: "Academic symposium featuring research presentations on blockchain scalability, privacy, and consensus mechanisms.",
-      attendees: 150,
-      type: "Academic",
+      id: 2,
+      title: "Privacy and Verifiability Hackathon",
+      date: "2025-03-08",
+      time: "10:00 - 12:00 (26 hours)",
+      location: "BC Building, Room 410, EPFL, Lausanne",
+      description: "36-hour hackathon challenging participants to develop innovative solutions focusing on privacy and verifiability in blockchain technology.",
+      attendees: 36,
+      type: "Hackathon",
       registrationUrl: null,
-      detailedDescription: "The Blockchain Research Symposium brought together leading researchers, academics, and industry professionals to discuss cutting-edge developments in blockchain technology. The symposium featured presentations on novel consensus mechanisms, privacy-preserving protocols, and scalability solutions. Key topics included zero-knowledge proofs, layer 2 scaling solutions, and cross-chain interoperability. The event fostered meaningful discussions between academia and industry, leading to several collaborative research initiatives. The symposium also included a poster session where students presented their latest research findings.",
+      detailedDescription: "Following the successful conference, the Privacy and Verifiability Hackathon was an epic 36-hour event that challenged participants to develop innovative solutions focusing on privacy and verifiability in blockchain technology. The hackathon featured 23 project submissions from 36 hackers, all working on cutting-edge blockchain applications. Supported by industry-leading sponsors including Mina, the Hedera Hashgraph Association, and Hylé, participants had access to a total prize pool of 15,000 USD. The event was open to all students, professionals, and enthusiasts with an interest in blockchain technology. Projects were judged based on innovation, technical execution, and how well they addressed privacy concerns while ensuring verifiability in blockchain. The hackathon fostered intense collaboration and innovation, with teams working around the clock to build and present their solutions. The event concluded with project presentations and the announcement of winners, showcasing the incredible talent and creativity in the blockchain community.",
       photos: [
-        "/placeholder.jpg?height=400&width=600",
-        "/placeholder.jpg?height=400&width=600"
+        "/bsa_events/IMG_0492.JPG",
+        "/bsa_events/IMG_0578.JPG", 
+        "/bsa_events/IMG_3494.JPG"
       ],
       highlights: [
-        "150+ researchers and professionals",
-        "15 research presentations",
-        "Poster session with student research",
-        "Industry-academia networking",
-        "Collaborative research initiatives"
+        "36 hackers participated in 26-hour event",
+        "23 project submissions",
+        "15,000 USD total prize pool",
+        "Sponsored by Mina, Hedera Hashgraph Association, Hylé",
+        "Focus on privacy and verifiability solutions",
+        "Intensive collaboration and innovation"
       ]
     },
     {
-      id: 6,
-      title: "Startup Pitch Competition",
-      date: "2025-06-15",
-      time: "14:00 - 18:00",
-      location: "EPFL Innovation Park",
-      description: "Student teams pitched their blockchain startup ideas to a panel of investors and industry experts.",
-      attendees: 200,
-      type: "Competition",
-      registrationUrl: null,
-      detailedDescription: "Our inaugural Startup Pitch Competition was a thrilling showcase of entrepreneurial talent! Ten student teams presented innovative blockchain startup ideas to a distinguished panel of investors, industry experts, and successful entrepreneurs. The competition featured startups working on DeFi protocols, NFT marketplaces, supply chain solutions, and more. Teams were evaluated on innovation, market potential, technical feasibility, and presentation quality. The winning team received seed funding and mentorship opportunities. The event also included networking sessions where participants connected with potential investors and advisors.",
+      id: 3,
+      title: "SUI <> BSA Hackathon 2nd Edition 💧",
+      date: "2024-10-12",
+      time: "48 hours (October 12-13)",
+      location: "BC Building (building of the IC faculty), EPFL, Ecublens",
+      description: "European Sui Hackathon in partnership with Sui Foundation, featuring a $20,000+ prize pool and intensive Move language development.",
+      attendees: 50,
+      type: "Hackathon",
+      registrationUrl: "https://bsaepfl.ch/hackathon/",
+      detailedDescription: "The SUI <> BSA Hackathon 2nd Edition was a groundbreaking event that brought together blockchain enthusiasts and developers for an intensive 48-hour coding experience. Organized by EPFL's Blockchain Club in partnership with the Sui Foundation, this hackathon offered participants a unique opportunity to develop their skills in the Move language while exploring the revolutionary Sui ecosystem. With a substantial prize pool exceeding $20,000, the event attracted teams of 3-5 developers eager to build innovative blockchain applications. The hackathon took place in the dedicated BC building at EPFL, providing participants with a complete environment including relaxation spaces, shower facilities, and complimentary food throughout the two-day event. To ensure all participants could succeed regardless of their Move language experience, the organizers provided comprehensive pre-hackathon workshops: a Sui Overview and installation session on September 23rd, a Move language fundamentals workshop on September 30th, and an advanced features workshop on October 7th covering Move language intricacies, Zklogin, deep book, and Kiosk functionality, led by a developer from the Sui Foundation. The event fostered intense collaboration, innovation, and skill development, with teams working around the clock to create cutting-edge applications on the Sui blockchain. This hackathon not only provided valuable learning opportunities but also strengthened the connection between the academic blockchain community and industry leaders, showcasing the potential of the next generation of blockchain developers.",
       photos: [
-        "/placeholder.jpg?height=400&width=600",
-        "/placeholder.jpg?height=400&width=600",
-        "/placeholder.jpg?height=400&width=600",
-        "/placeholder.jpg?height=400&width=600"
+        "/bsa_events/hackathon-sui-1.jpg",
+        "/bsa_events/hackathon-sui-2.jpg",
+        "/bsa_events/hackathon-sui-3.jpg"
       ],
       highlights: [
-        "10 student startup teams",
-        "Distinguished investor panel",
-        "Seed funding for winners",
-        "Mentorship opportunities",
-        "Networking with industry leaders"
+        "48-hour intensive hackathon experience",
+        "$20,000+ prize pool",
+        "Partnership with Sui Foundation",
+        "Pre-hackathon Move language workshops",
+        "Complete facility access with food and amenities",
+        "Focus on Sui ecosystem and Move language development"
       ]
     }
+    
   ]
 
   const openEventModal = (event: any) => {
